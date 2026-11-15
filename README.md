@@ -1,442 +1,622 @@
-# AWS and DevOps Tools learning and implementations
+# AWS & DevOps Learning and Implementation Report
 
 ![AWS](https://img.shields.io/badge/AWS-SAA--C03-orange?logo=amazonaws)
-![Documentation](https://img.shields.io/badge/format-Markdown-blue)
+![Documentation](https://img.shields.io/badge/Documentation-Markdown-blue)
+![Focus](https://img.shields.io/badge/Focus-Learning%20%7C%20Hands--on%20Implementation-informational)
 
-**Course:** [New AWS Certified Solutions Architect Associate (SAA-C03) – Udemy](https://www.udemy.com/course/new-aws-certified-solutions-architect-associate-saa-c03/)
+> Notes from my AWS Solutions Architect Associate (SAA-C03) study and the practical work I completed while learning AWS, Linux security and infrastructure monitoring.
 
-**Purpose:** A concise record of the main AWS concepts studied and the practical exercises recorded in my course notes (Days 2–27, assignment and daily update).
+**Course reference:** [New AWS Certified Solutions Architect Associate (SAA-C03) – Udemy](https://www.udemy.com/course/new-aws-certified-solutions-architect-associate-saa-c03/)
 
-> This document summarizes personal learning notes. Practical items below are included where the notes record a lab, configuration or test. It is not a claim that every AWS service or SAA-C03 exam objective has been mastered.
-
-## Contents
-
-- [1. Main AWS Topics](#1-main-aws-topics)
-  - [Cloud and IAM](#cloud-and-iam)
-  - [Compute and Containers](#compute-and-containers)
-  - [Networking and Content Delivery](#networking-and-content-delivery)
-  - [Storage and Databases](#storage-and-databases)
-  - [High Availability, Scaling and Recovery](#high-availability-scaling-and-recovery)
-  - [Serverless and Application Integration](#serverless-and-application-integration)
-  - [Security, Monitoring and Governance](#security-monitoring-and-governance)
-  - [Infrastructure, Migration and Cost](#infrastructure-migration-and-cost)
-- [2. Practical Exercises Recorded](#2-practical-exercises-recorded)
-- [3. Key Architecture Flowcharts](#3-key-architecture-flowcharts)
-- [4. Learning Summary](#4-learning-summary)
-- [5. Document Scope](#5-document-scope)
-- [6. Additional EC2 Security and Monitoring Implementation](#6-additional-ec2-security-and-monitoring-implementation)
+**Purpose:** A summary of the topics I studied, the AWS exercises I worked through and the infrastructure tasks I completed. I have kept the explanations brief and used flowcharts where they make the setup easier to follow.
 
 ---
 
-## 1. Main AWS Topics
+## Table of Contents
 
-### Cloud and IAM
-
-- **Cloud fundamentals:** Physical servers, virtual machines, containers, cloud service models and AWS Shared Responsibility Model.
-- **IAM:** Users, groups, roles, identity-based and resource-based policies, managed/inline policies, trust policies, MFA and temporary credentials through AWS STS.
-- **Governance:** AWS Organizations, Organizational Units, Service Control Policies (SCPs) and IAM Identity Center.
-- **Core principle:** IAM policies define permissions; an explicit deny overrides an allow. Roles provide temporary credentials and should be preferred over long-lived access keys where applicable.
-
-### Compute and Containers
-
-- **EC2:** AMIs, instance families/sizes, user data, key pairs, security groups, IAM instance roles, instance metadata, ENIs and placement groups.
-- **EC2 storage:** EBS volumes, volume types, IOPS/throughput, snapshots, encryption and instance store.
-- **Pricing models:** On-Demand, Spot, Reserved Instances and Savings Plans.
-- **Containers:** Docker, Amazon ECR, ECS, EKS and Fargate. Understand the difference between an ECS task execution role and an application task role.
-- **Other compute:** Lambda for event-driven functions and Elastic Beanstalk for managed application deployments.
-
-### Networking and Content Delivery
-
-- **VPC basics:** CIDR, subnets, route tables, Internet Gateway, NAT Gateway, security groups (stateful) and network ACLs (stateless).
-- **Private connectivity:** Gateway and interface VPC endpoints, PrivateLink, VPC Peering, Transit Gateway, Site-to-Site VPN, Client VPN and Direct Connect.
-- **Network visibility:** VPC Flow Logs for flow metadata; Traffic Mirroring for packet-level inspection.
-- **DNS and edge:** Route 53 routing policies, health checks, CloudFront CDN, S3 origins, Origin Access Control (OAC) and signed URLs/cookies.
-
-### Storage and Databases
-
-- **S3:** Object storage, storage classes, Block Public Access, bucket policies, encryption, versioning, Object Lock, MFA Delete, lifecycle rules, replication, events and access logging.
-- **Block and file storage:** EBS for EC2 block storage; EFS for shared NFS storage; FSx for managed file-system use cases.
-- **Data movement and backup:** DataSync, Transfer Family, Storage Gateway, Snow services and AWS Backup.
-- **Databases:** RDS and Aurora (Multi-AZ, read replicas, backups, snapshots and encryption), DynamoDB (partition/sort keys, Query vs Scan, indexes, Streams and backups), and ElastiCache.
-- **Analytics:** Glue crawlers/catalog, Athena queries over S3 data and QuickSight dashboards.
-
-### High Availability, Scaling and Recovery
-
-- **Load balancing:** ALB for HTTP/HTTPS application-layer routing; NLB for Layer 4 traffic and static IP use cases; GWLB for scaling network appliances.
-- **Auto Scaling Groups:** Launch Templates, minimum/desired/maximum capacity, health checks, target tracking, step/simple, scheduled and predictive scaling.
-- **Database availability:** RDS Multi-AZ for availability/failover; read replicas for read scaling.
-- **Disaster recovery:** Backups, snapshots, cross-Region options, Recovery Point Objective (RPO) and Recovery Time Objective (RTO).
-
-### Serverless and Application Integration
-
-- **Lambda and API Gateway:** Event-driven compute, execution roles, concurrency, versions/aliases and VPC access.
-- **Messaging:** SQS for queues, SNS for pub/sub notifications and EventBridge for event filtering/routing.
-- **Workflow and orchestration:** Step Functions and related event-driven service integrations.
-
-### Security, Monitoring and Governance
-
-- **Encryption and identity:** KMS, ACM certificates, Secrets Manager, Parameter Store and IAM least privilege.
-- **Threat protection:** WAF for web-layer filtering, Shield for DDoS protection, GuardDuty for threat detection, Inspector for vulnerability findings, Security Hub for centralized findings and Detective for investigation support.
-- **Operations:** CloudWatch metrics/logs/alarms and CloudWatch Agent; Systems Manager Session Manager, Run Command and Patch Manager.
-- **Audit/configuration:** CloudTrail for API activity and AWS Config for resource configuration history and compliance rules.
-
-### Infrastructure, Migration and Cost
-
-- **Infrastructure as Code:** CloudFormation templates (YAML/JSON), stacks, parameters, outputs and change management; AWS CDK synthesizes infrastructure definitions to CloudFormation.
-- **Migration:** Application Migration Service (MGN), Database Migration Service (DMS), DataSync and Storage Gateway.
-- **Cost management:** Pricing Calculator, Cost Explorer, AWS Budgets, billing alerts, cost allocation tags and consolidated billing.
-- **Additional services covered:** Rekognition, Polly, Transcribe, Textract, Translate and SageMaker AI.
+- [1. Overview](#1-overview)
+- [2. AWS Concepts Learned](#2-aws-concepts-learned)
+  - [2.1 Cloud and AWS fundamentals](#21-cloud-and-aws-fundamentals)
+  - [2.2 Compute: EC2 and Auto Scaling](#22-compute-ec2-and-auto-scaling)
+  - [2.3 Networking: VPC and connectivity](#23-networking-vpc-and-connectivity)
+  - [2.4 Load balancing and DNS](#24-load-balancing-and-dns)
+  - [2.5 Storage: S3, EBS and EFS](#25-storage-s3-ebs-and-efs)
+  - [2.6 Databases: RDS and DynamoDB](#26-databases-rds-and-dynamodb)
+  - [2.7 Containers and serverless](#27-containers-and-serverless)
+  - [2.8 Security, access and operations](#28-security-access-and-operations)
+  - [2.9 Infrastructure as Code and cost management](#29-infrastructure-as-code-and-cost-management)
+- [3. Practical AWS Implementations](#3-practical-aws-implementations)
+  - [3.1 VPC with public and private subnets](#31-vpc-with-public-and-private-subnets)
+  - [3.2 Private EC2 access, NAT Gateway and S3 Gateway Endpoint](#32-private-ec2-access-nat-gateway-and-s3-gateway-endpoint)
+  - [3.3 HTTPS application with ALB, ACM and Route 53](#33-https-application-with-alb-acm-and-route-53)
+  - [3.4 EC2 Auto Scaling with CloudWatch](#34-ec2-auto-scaling-with-cloudwatch)
+  - [3.5 S3 static website and bucket access policy](#35-s3-static-website-and-bucket-access-policy)
+  - [3.6 S3 event automation with EventBridge and Lambda](#36-s3-event-automation-with-eventbridge-and-lambda)
+  - [3.7 Flask container deployment with ECR and ECS Fargate](#37-flask-container-deployment-with-ecr-and-ecs-fargate)
+  - [3.8 Private EC2-to-RDS MySQL connectivity](#38-private-ec2-to-rds-mysql-connectivity)
+  - [3.9 CloudWatch Agent and VPC Flow Logs](#39-cloudwatch-agent-and-vpc-flow-logs)
+- [4. EC2 Host Security: Fail2ban and msmtp](#4-ec2-host-security-fail2ban-and-msmtp)
+- [5. Centralized Infrastructure Monitoring: Nagios Core and NRPE](#5-centralized-infrastructure-monitoring-nagios-core-and-nrpe)
+- [6. Other Practical Learning Summaries](#6-other-practical-learning-summaries)
+- [7. What I Learned Overall](#7-what-i-learned-overall)
+- [8. What I'd Like to Work on Next](#8-what-id-like-to-work-on-next)
 
 ---
 
-## 2. Practical Exercises Recorded
+## 1. Overview
 
-The following practicals are consolidated from the day-wise notes. Repeated exercises are grouped together; the day references are retained to help trace the original notes.
+Over this learning period, I worked through the AWS Solutions Architect Associate (SAA-C03) course and practised several of the services in AWS. I focused on understanding how compute, networking, storage, databases, containers, security and monitoring fit together, rather than learning each service in isolation.
 
-### EC2, IAM and EBS — Days 2–3, 27 and assignment
+Alongside the course work, I completed practical tasks on EC2: setting up Fail2ban with msmtp for security notifications, and installing Nagios Core on a main instance to monitor two other EC2 instances through NRPE. Those exercises helped me connect the AWS concepts with the day-to-day work of securing and looking after servers.
 
-- Launched an Ubuntu EC2 instance and connected using SSH; tested EC2 Instance Connect and its required IAM permissions.
-- Used EC2 user data during instance launch.
-- Attached an IAM role to an EC2 instance and accessed/downloaded an object from S3.
-- Created an AMI from an existing EC2 instance and used it as a launch image.
-- Practised EBS volume and snapshot workflows, including using a snapshot to create a volume in another Availability Zone.
-- Created and attached an additional ENI, detached/reattached network interfaces where supported, and associated an Elastic IP when needed.
-- Recovered access after losing an SSH key: used EC2 Instance Connect and a helper EC2 instance to attach the original EBS volume, update the authorized public key and restore the volume to the original instance.
-- Created a zero-permission IAM user, configured a role with a trust relationship and permissions, used MFA/role switching, and launched EC2 using the assumed role.
-
-### Load Balancing, DNS and Auto Scaling — Days 4–6
-
-- Created Launch Templates, target groups and a load balancer; registered EC2 instances as targets.
-- Connected a custom domain to a load balancer using Route 53 records.
-- Configured an ALB with HTTP/HTTPS, requested an ACM certificate and completed DNS validation using a Route 53 CNAME record.
-- Configured host-based routing with separate target groups and DNS records for different hostnames.
-- Created an Auto Scaling Group using a Launch Template and tested scaling based on CPU utilization (the notes use a 50% test threshold).
-- Created a VPC with a `/24` CIDR, public/private subnets across Availability Zones, route tables and an Internet Gateway.
-
-### Private Networking and VPC Connectivity — Days 6–8 and 26
-
-- Connected to a private EC2 instance through a public EC2 instance and tested security-group restrictions.
-- Created a NAT Gateway and tested outbound internet/package access from a private-subnet instance.
-- Created an S3 Gateway VPC Endpoint and tested private access to S3 from an instance in the private subnet.
-- Studied/recorded VPC endpoint, PrivateLink, VPC Peering, Transit Gateway, VPN and Direct Connect patterns.
-- Created a VPC and configured routing/security groups for database connectivity testing.
-
-### S3 and CloudFront — Days 8–10 and 15
-
-- Created S3 buckets using different storage classes.
-- Tested bucket access using Block Public Access settings and bucket policies, including access for a specific IAM user.
-- Enabled S3 versioning and tested object versions; enabled/tested Object Lock and MFA Delete using the CLI.
-- Created two buckets and tested S3 replication (including the replication scenario recorded in the notes).
-- Configured an S3 event notification with SNS and tested email delivery after an object upload.
-- Configured S3 server access logging to a logging bucket.
-- Used S3 Batch Operations with a manifest and IAM role to update tags on multiple objects.
-- Enabled S3 static website hosting.
-- Configured an EventBridge rule to invoke Lambda after an S3 object upload.
-- Created a private S3 bucket and CloudFront distribution using the bucket as an origin; reviewed the private-origin access pattern.
-
-### Containers and Databases — Days 11–14
-
-- Installed Docker on EC2, wrote a Dockerfile, built an image and ran a container.
-- Created an ECS cluster and ran a Flask container using Fargate (task definition, cluster and service).
-- Created an ECS cluster using EC2 capacity/Auto Scaling and deployed a Flask task/service.
-- Launched an RDS MySQL database, installed a MySQL client on EC2 and connected to the database endpoint.
-- Created an RDS database snapshot, restored a database from the snapshot and tested connectivity.
-- Created a DynamoDB table with partition and sort keys and added items.
-- Uploaded a CSV file to S3, created a Glue crawler/database and queried the discovered data using Athena.
-
-### Route 53, Messaging and Event-Driven Workflows — Days 15–18
-
-- Created a Route 53 private hosted zone and records to resolve an internal EC2 hostname within a VPC.
-- Configured Route 53 failover routing with health checks and tested records pointing to two EC2 instances.
-- Created an SQS standard queue and sent/received messages using the AWS CLI.
-- Created an SNS topic and subscription and tested email delivery by publishing a message.
-- Created an EventBridge rule for EC2 launch/termination events and verified email notifications.
-- Built a weather application workflow using API Gateway, Lambda and DynamoDB: created a table/items, configured a Lambda execution role/function, tested the function and exposed it through API Gateway.
-- Created and deployed a CloudFormation stack from a YAML VPC template.
-
-### Application Deployment, Monitoring and Governance — Days 19–25
-
-- Created an Elastic Beanstalk single-instance web environment.
-- Created a CloudWatch alarm for EC2 high CPU and connected SNS email notifications; generated load to test alarm activation.
-- Created an AWS Organization/member account and applied an SCP restricting the EC2 instance type that could be launched; tested the restriction.
-- Enabled IAM Identity Center, created a user and permission set, assigned access to an organization account and tested sign-in.
-- Created a billing alert (the notes record a USD 5 threshold) with SNS email notification and created an AWS Budget.
-- Used Systems Manager Session Manager as an instance access method; the notes also cover the IAM role and connectivity requirements.
-- Created a CloudFormation template in YAML, uploaded it to S3 and created a stack from that template.
-- Installed the CloudWatch Agent on EC2 using an attached IAM role and configured it for log collection.
-
-### VPC Logs and RDS Connectivity — Daily Update and Day 26
-
-- Created a CloudWatch Log Group for VPC Flow Logs.
-- Created/attached an IAM role and policy that allow VPC Flow Logs to publish to the log destination.
-- Enabled VPC Flow Logs and directed the records to CloudWatch Logs.
-- Tested RDS network access from a local system and adjusted the database security-group rules for the connectivity test.
+This report brings the main topics and practical exercises together. The theory is kept short, while the implementation sections show the setup sequence, the services involved and the checks performed.
 
 ---
 
-## 3. Key Architecture Flowcharts
+## 2. AWS Concepts Learned
 
-### 3.1 Public and private EC2 network with private S3 access
+These are the AWS services and concepts I spent the most time understanding, especially where they connect to the practical exercises.
 
-```mermaid
-flowchart TD
-    Internet[Internet] --> IGW[Internet Gateway]
-    subgraph VPC[AWS VPC]
-      subgraph Public[Public subnet]
-        Bastion[Public EC2]
-        NAT[NAT Gateway]
-      end
-      subgraph Private[Private subnet]
-        App[Private EC2]
-      end
-      Endpoint[S3 Gateway Endpoint]
-    end
-    IGW --> Bastion
-    App -->|Outbound internet| NAT --> IGW
-    App -->|Private S3 traffic| Endpoint --> S3[(Amazon S3)]
-    Bastion -->|SSH through VPC| App
-```
+### 2.1 Cloud and AWS fundamentals
 
-### 3.2 Highly available application
+| Concept | What I learned | Where it is useful / impact |
+|---|---|---|
+| Shared Responsibility Model | AWS secures the underlying cloud infrastructure; customers secure their data, identities, configurations and workloads according to the service used. | Helps identify which security controls belong to AWS and which must be configured and maintained by the customer. |
+| Availability and scalability | High availability reduces dependence on a single component; scalability adjusts capacity to workload demand. | Helps design services that continue operating through component failures and changing traffic. |
+| Control plane and data plane | The control plane manages resources; the data plane performs the service's primary workload. | Helps understand service operation, permissions and troubleshooting boundaries. |
+| Regions and Availability Zones | AWS resources have different scopes; many workloads use multiple AZs for resilience. | Influences subnet design, service placement, replication and disaster recovery. |
 
-```mermaid
-flowchart TD
-    User[Users] --> DNS[Route 53]
-    DNS --> CDN[CloudFront]
-    CDN --> ALB[Application Load Balancer]
-    ALB --> ASG[Auto Scaling Group]
-    ASG --> A[EC2 targets in AZ A]
-    ASG --> B[EC2 targets in AZ B]
-    A --> DB[(RDS / Aurora)]
-    B --> DB
-    A --> S3[(S3 storage)]
-    B --> S3
-```
+### 2.2 Compute: EC2 and Auto Scaling
 
-### 3.3 Event-driven application
+| Service / concept | What I learned | Where it is useful / impact |
+|---|---|---|
+| Amazon EC2 | Instance configuration includes AMI, instance type, storage, VPC/subnet, security groups, key pair, IAM role and user data. | Runs workloads that need virtual-machine-level control over the operating system, software and runtime. |
+| AMI and user data | AMIs provide reusable machine images; user data can bootstrap an instance during launch. | Makes instance provisioning more repeatable and reduces manual setup. |
+| EBS and instance store | EBS provides persistent block storage; instance store is temporary host-attached storage. | Helps select storage based on persistence, performance and recovery needs. |
+| Auto Scaling Group (ASG) | Uses a launch template and minimum, desired and maximum capacity; scaling policies can respond to metrics or schedules. | Adjusts EC2 capacity as demand changes and can replace unhealthy instances. |
+| EC2 pricing options | Reviewed On-Demand, Spot, Reserved Instances and Savings Plans. | Supports cost selection based on workload duration, predictability and interruption tolerance. |
 
-```mermaid
-flowchart LR
-    Client[Client] --> API[API Gateway]
-    API --> Lambda[Lambda function]
-    Lambda --> DDB[(DynamoDB)]
-    S3[(S3 object upload)] --> EB[EventBridge]
-    EB --> Worker[Lambda / service target]
-    EB --> SNS[SNS notification]
-    SNS --> Email[Email subscriber]
-```
+**What I learned:** How to select and configure EC2 resources, bootstrap instances, choose storage, use IAM roles, and scale instance capacity.
 
-### 3.4 Monitoring and audit
+**AWS use and impact:** EC2 is used for applications, agents and services that need VM compute. ASG can increase or decrease capacity based on configured policies, supporting availability and more efficient resource usage.
 
-```mermaid
-flowchart TD
-    EC2[EC2 instances] --> Agent[CloudWatch Agent]
-    Agent --> Logs[CloudWatch Logs / Metrics]
-    Logs --> Alarm[CloudWatch Alarm]
-    Alarm --> SNS[SNS]
-    SNS --> Email[Email notification]
-    VPC[VPC] --> Flow[VPC Flow Logs]
-    Flow --> Logs
-    Trail[CloudTrail] --> Audit[S3 / CloudWatch Logs]
-    Config[AWS Config] --> Rules[Config rules]
-```
+### 2.3 Networking: VPC and connectivity
+
+| Service / concept | What I learned | Where it is useful / impact |
+|---|---|---|
+| VPC and subnets | A VPC is an isolated network; subnets divide it into smaller ranges and are placed in Availability Zones. | Provides network separation for public-facing resources, application servers and databases. |
+| Route tables and Internet Gateway | Route tables direct subnet traffic; an IGW provides a route to the public internet when correctly configured. | Controls which networks and destinations a subnet can reach. |
+| NAT Gateway | Allows instances in a private subnet to initiate outbound connections without accepting unsolicited inbound connections from the internet. | Supports package downloads and outbound API/service access while keeping instances private. |
+| Security Groups and NACLs | Security Groups are stateful and associated with resources/network interfaces; NACLs are stateless and apply at subnet level. | Provides layered network traffic control. |
+| VPC endpoints | Gateway endpoints provide private routing to S3 and DynamoDB; interface endpoints use private network interfaces for supported services. | Allows private access to supported AWS services without routing that traffic through the public internet. |
+| VPC Peering and Transit Gateway | Peering connects two VPCs directly; Transit Gateway provides hub-and-spoke connectivity for multiple VPCs and networks. | Helps scale private connectivity as the number of networks grows. |
+| VPN and Direct Connect | Site-to-Site VPN uses encrypted IPsec tunnels over the internet; Direct Connect provides dedicated connectivity and is not encrypted by default. | Connects on-premises networks and AWS for hybrid architectures. |
+| VPC Flow Logs | Records metadata about IP traffic for a VPC, subnet or ENI. | Helps investigate accepted/rejected traffic and troubleshoot network paths. |
+
+**What I learned:** How to design network boundaries, route traffic, isolate private instances, provide controlled egress and connect workloads to AWS services privately.
+
+**AWS use and impact:** VPC design is foundational for EC2, RDS, load balancers and container workloads. Correct subnet and route-table design helps reduce unwanted exposure and makes connectivity easier to troubleshoot.
+
+### 2.4 Load balancing and DNS
+
+| Service / concept | What I learned | Where it is useful / impact |
+|---|---|---|
+| Application Load Balancer (ALB) | Operates at Layer 7 and supports host/path-based routing, listeners, rules, target groups and health checks. | Routes HTTP/HTTPS requests to the appropriate application targets. |
+| Network Load Balancer (NLB) | Operates at Layer 4 and supports TCP/UDP/TLS use cases, including static IP requirements. | Handles high-performance network traffic where transport-level routing or static addresses are needed. |
+| AWS Certificate Manager (ACM) | Provisions and manages TLS certificates for supported AWS integrations; DNS validation can use Route 53. | Enables encrypted HTTPS connections for supported endpoints such as ALB. |
+| Amazon Route 53 | Provides DNS records and routing policies, including simple, weighted, latency and failover policies. | Maps application names to endpoints and supports DNS-based routing choices. |
+
+**What I learned:** How DNS, TLS certificates, load balancer listeners and target groups work together to deliver an application over HTTPS.
+
+**AWS use and impact:** ALB, ACM and Route 53 provide a managed application entry point, TLS termination and hostname-based routing. Health checks help route traffic away from unhealthy targets.
+
+### 2.5 Storage: S3, EBS and EFS
+
+| Service | Short overview | Where it is useful / impact |
+|---|---|---|
+| Amazon S3 | Object storage using buckets and objects. Access can be controlled through Block Public Access, bucket policies, IAM, versioning and encryption. | Stores static website assets, backups, logs, data files and application objects. Lifecycle rules can transition or expire objects. |
+| Amazon EBS | Persistent block storage attached to EC2 in the same Availability Zone. Supports snapshots and encryption. | Provides boot and data volumes for EC2 workloads. Snapshots support backup and volume recovery workflows. |
+| Amazon EFS | Managed shared file storage that can be mounted by multiple Linux-based compute resources. | Supports shared application files, user directories and container workloads that need shared file access. |
+
+**What I learned:** The differences between object, block and shared file storage, along with basic S3 access control and static website hosting.
+
+**AWS use and impact:** Selecting the right storage service avoids using a block volume for object-storage needs or a single-instance disk where multiple compute resources need shared files. S3 access settings must be reviewed carefully to prevent unintended public access.
+
+### 2.6 Databases: RDS and DynamoDB
+
+**Amazon RDS** is a managed relational database service. The notes cover MySQL, private networking, Security Group access, Multi-AZ deployment, read replicas, backups, encryption and storage scaling.
+
+- **Multi-AZ:** Supports availability through a standby deployment; it is primarily an availability feature.
+- **Read replicas:** Provide read scaling and can support reporting or read-heavy workloads.
+- **Backups and snapshots:** Support point-in-time recovery and longer-term backup needs.
+- **Security:** Use private networking, least-privilege access, encryption and secure credential storage.
+
+**Amazon DynamoDB** is a managed NoSQL key-value/document database. I learned its table, item, partition key and sort key concepts, and the difference between Query and Scan operations. It is useful for applications that need managed, scalable key-value or document access patterns.
+
+**What I learned:** How to distinguish relational database workloads from key-value/document workloads and how private EC2-to-RDS access can be controlled through Security Groups.
+
+**AWS use and impact:** RDS is useful when an application needs a relational database engine. DynamoDB is useful when an application is designed around key-based access patterns and managed NoSQL data storage.
+
+### 2.7 Containers and serverless
+
+| Service / concept | What I learned | Where it is useful / impact |
+|---|---|---|
+| Docker | A Dockerfile describes how to build an image; an image packages the application and dependencies. | Makes application packaging and runtime environments more consistent. |
+| Amazon ECR | Managed registry for storing and controlling container images. | Provides a private image source for ECS and EKS deployments. |
+| Amazon ECS | Runs and manages container tasks and services, using EC2 capacity or Fargate. | Deploys containerized applications and maintains the desired task count. |
+| AWS Fargate | Runs ECS tasks without requiring management of the underlying EC2 worker fleet. | Reduces infrastructure administration for container workloads. |
+| Amazon EKS | Managed Kubernetes control plane; workloads run on supported worker compute. | Runs Kubernetes workloads where Kubernetes APIs and ecosystem integrations are required. |
+| AWS Lambda | Runs event-driven code without managing servers. | Supports automation and event-processing tasks. |
+| Amazon EventBridge | Matches events against rules and routes them to targets. | Connects event producers to Lambda and other targets for automation. |
+
+**What I learned:** How application code is built into a container image, stored in ECR and deployed through ECS; and how event-driven services can trigger serverless functions.
+
+**AWS use and impact:** ECS/Fargate reduces the operational work of managing container hosts. EventBridge and Lambda can automate responses to service or application events.
+
+### 2.8 Security, access and operations
+
+This section is intentionally brief and focuses on the services used in the practical work.
+
+- **IAM:** Users, groups, roles and policies control who or what can access AWS resources. Prefer roles and temporary credentials for workloads rather than long-lived embedded credentials.
+- **EC2:** Access can use SSH or EC2 Instance Connect. Instance roles provide AWS API permissions to applications running on EC2.
+- **AWS Systems Manager:** Session Manager provides IAM-controlled access to managed instances without requiring an inbound SSH port. Managed instances need a working SSM Agent, suitable IAM permissions and connectivity to Systems Manager endpoints.
+- **AWS KMS:** Manages encryption keys used by AWS services and applications.
+- **ACM:** Manages TLS certificates for supported AWS integrations.
+- **CloudWatch:** Collects metrics and logs and evaluates alarms; alarms can notify through SNS or trigger supported actions.
+- **CloudTrail:** Records account activity and API events for audit and investigation.
+- **AWS Config:** Records resource configuration and evaluates resources against configuration rules.
+- **WAF and Shield:** WAF helps filter web requests; Shield provides DDoS protection at supported AWS layers.
+
+**What I learned:** Access control should be based on least privilege, host access should be controlled, and logs/metrics are required to observe and investigate infrastructure behavior.
+
+**AWS use and impact:** These services help secure identities and workloads, provide operational visibility and support auditing. They do not replace application-level security or host hardening.
+
+### 2.9 Infrastructure as Code and cost management
+
+- **AWS CloudFormation:** Uses JSON or YAML templates to describe the desired AWS resources and create/update a stack. Drift detection helps identify configuration changes made outside the stack.
+- **AWS Budgets and billing alerts:** Set thresholds and notifications for usage or estimated spend.
+- **Cost Explorer:** Helps review and break down AWS costs by service, account, Region and other dimensions.
+- **Cost allocation tags:** Help categorize resource spend by environment, project or cost centre.
+
+**What I learned:** Infrastructure can be described in templates and costs should be reviewed throughout implementation, not only after deployment.
+
+**AWS use and impact:** CloudFormation makes deployments more repeatable. Budgets, billing alarms, Cost Explorer and tags improve cost visibility and help identify unexpected spending.
 
 ---
 
-## 4. Learning Summary
+## 3. Practical AWS Implementations
 
-The supplied notes record study and labs across core AWS architecture areas: EC2, EBS, VPC, load balancing, Auto Scaling, S3, databases, containers, serverless, messaging, IAM, security, monitoring, governance, CloudFormation and cost management. The practical section lists the hands-on exercises recorded in the notes and can be used as a checklist when reviewing or reproducing the labs.
+The following flowcharts focus on the practical exercises recorded in my notes. Each diagram shows the main setup sequence and validation step. Where an exact value or configuration was not recorded, it is not invented here.
 
-## 5. Document Scope
+### 3.1 VPC with public and private subnets
 
-- Based on the AWS SAA-C03 notes supplied for Days 2–27, the assignment and daily update.
-- Day 1 notes were not included in the supplied files.
-- The practical list reflects activities recorded in the notes; where the source only describes a concept, it is kept in the topic summary rather than presented as a completed lab.
-- Review current AWS service documentation, limits, pricing and security guidance before reusing any course-lab configuration in production.
+**Objective:** Create an isolated VPC with separate public and private subnets, route tables and an Internet Gateway.
+
+**What I implemented / learned:** Created a VPC, attached an Internet Gateway, created public and private subnets in separate Availability Zones, created route tables and associated them with the appropriate subnets.
+
+**What this solves:** Separates internet-facing resources from resources that should not have direct inbound internet routes.
+
+**Flowchart:**
+
+```mermaid
+flowchart TD
+    A[Create VPC and CIDR] --> B[Create public subnet]
+    A --> C[Create private subnet]
+    B --> D[Create and attach Internet Gateway]
+    D --> E[Create public route table]
+    E --> F[Add default route 0.0.0.0/0 to IGW]
+    F --> G[Associate public subnet]
+    C --> H[Create private route table]
+    H --> I[Keep VPC-local route]
+    I --> J[Associate private subnet]
+    G --> K[Launch public EC2]
+    J --> L[Launch private EC2]
+    K --> M[Validate public subnet routing]
+    L --> N[Validate private subnet isolation]
+```
+
+**Impact:** Provides a basic network foundation for placing public entry points separately from private application or database resources. A subnet is not public solely because it is named “public”; its route table and resource addressing/security configuration determine reachability.
+
+### 3.2 Private EC2 access, NAT Gateway and S3 Gateway Endpoint
+
+**Objective:** Connect to a private EC2 instance through a public EC2 instance, provide outbound access through NAT, and access S3 privately through a Gateway Endpoint.
+
+**What I implemented / learned:** Used a public instance as the SSH jump point to reach a private instance over its private IP. The private instance initially had no outbound internet route. A NAT Gateway was created in the public subnet and the private route table was updated. A Gateway Endpoint was then configured for S3 and its route-table entry was verified.
+
+**What this solves:** Supports controlled administration of private instances, outbound updates without direct inbound internet access, and private S3 access from the VPC.
+
+**Flowchart:**
+
+```mermaid
+flowchart TD
+    A[Create public and private EC2 instances] --> B[Configure private EC2 Security Group]
+    B --> C[Allow SSH from approved public EC2 source]
+    C --> D[Connect to public EC2]
+    D --> E[SSH to private EC2 using private IP]
+    E --> F{Does private EC2 need outbound internet?}
+    F -- Yes --> G[Create NAT Gateway in public subnet]
+    G --> H[Allocate and associate Elastic IP]
+    H --> I[Add NAT route to private route table]
+    I --> J[Test outbound connectivity]
+    F -- S3 access --> K[Create S3 Gateway Endpoint]
+    K --> L[Associate endpoint with private route table]
+    L --> M[Attach required IAM permissions to EC2 role]
+    M --> N[Test private S3 access]
+```
+
+**Impact:** The private instance does not need a public IP for the documented SSH-through-public-instance workflow. NAT provides outbound connectivity; the S3 Gateway Endpoint provides a private route to S3. IAM permissions are still required for S3 API access.
+
+### 3.3 HTTPS application with ALB, ACM and Route 53
+
+**Objective:** Publish EC2-hosted application targets through an Application Load Balancer, configure HTTPS and route different hostnames to separate target groups.
+
+**What I implemented / learned:** Created an ALB and EC2 target group, requested an ACM certificate, completed DNS validation through a Route 53 CNAME record, configured the HTTPS listener, created host-based routing rules and mapped the hostnames to their target groups.
+
+**What this solves:** Gives users a DNS name and HTTPS entry point while routing requests to the correct backend target group.
+
+**Flowchart:**
+
+```mermaid
+flowchart TD
+    A[Create EC2 application targets] --> B[Create target group or groups]
+    B --> C[Register EC2 targets]
+    C --> D[Create Application Load Balancer]
+    D --> E[Configure listener]
+    E --> F[Request TLS certificate in ACM]
+    F --> G[Create Route 53 DNS validation CNAME]
+    G --> H[Wait for certificate validation]
+    H --> I[Attach certificate to ALB HTTPS listener 443]
+    I --> J[Create host-based listener rules]
+    J --> K[Create Route 53 application records]
+    K --> L[Request hostname over HTTPS]
+    L --> M{Which host header?}
+    M -- Host A --> N[Forward to Target Group A]
+    M -- Host B --> O[Forward to Target Group B]
+    N --> P[ALB health check and response]
+    O --> P
+```
+
+**Impact:** TLS is terminated at the ALB listener, and host-based rules direct requests to the right target group. Health checks help the ALB identify healthy targets. In the recorded exercise, the ALB accepted HTTPS traffic on port 443 and forwarded to EC2 targets on the configured target port.
+
+### 3.4 EC2 Auto Scaling with CloudWatch
+
+**Objective:** Create an Auto Scaling Group across two Availability Zones and test scale-out when CPU utilization rises.
+
+**What I implemented / learned:** Created a Launch Template and an ASG with minimum capacity 1, desired capacity 2 and maximum capacity 3. Configured CPU-based scaling around the 50% threshold and generated CPU load on the instances to observe an additional instance being launched.
+
+**What this solves:** Adjusts EC2 capacity based on demand and reduces the need to add or remove instances manually.
+
+**Flowchart:**
+
+```mermaid
+flowchart TD
+    A[Create EC2 Launch Template] --> B[Configure AMI, type, security and user data]
+    B --> C[Create Auto Scaling Group]
+    C --> D[Select two Availability Zones]
+    D --> E[Set minimum 1, desired 2, maximum 3]
+    E --> F[Configure CPU-based scaling policy]
+    F --> G[Launch and verify two EC2 instances]
+    G --> H[Generate CPU load on instances]
+    H --> I[CloudWatch evaluates CPU metric]
+    I --> J{Scaling threshold reached?}
+    J -- Yes --> K[ASG launches an additional instance]
+    J -- No --> L[Continue monitoring]
+    K --> M[Verify ASG instance count and health]
+    L --> I
+```
+
+**Impact:** Demonstrates automated capacity adjustment based on workload metrics. ASG instance health checks and application health checks are different; the target group's health check should also be considered when the application must be evaluated.
+
+### 3.5 S3 static website and bucket access policy
+
+**Objective:** Host a simple static website from an S3 bucket and configure the bucket access policy used in the exercise.
+
+**What I implemented / learned:** Prepared an `index.html` file and website assets, uploaded them to an S3 bucket, enabled static website hosting, selected the index document and configured a bucket policy to permit the intended website access.
+
+**What this solves:** Shows how static content can be hosted from object storage without running a web server on EC2.
+
+**Flowchart:**
+
+```mermaid
+flowchart TD
+    A[Prepare index.html and website assets] --> B[Create S3 bucket]
+    B --> C[Upload website files]
+    C --> D[Enable static website hosting]
+    D --> E[Set index document]
+    E --> F[Configure bucket access policy for the lab]
+    F --> G[Review Block Public Access and policy settings]
+    G --> H[Open S3 website endpoint]
+    H --> I[Validate page and assets]
+```
+
+**Impact:** Demonstrates low-operations hosting for static assets. The exercise used bucket-policy access for testing. For production, do not disable public-access protections without an approved design; prefer private S3 access through CloudFront Origin Access Control where appropriate, and review HTTPS, logging and access requirements.
+
+### 3.6 S3 event automation with EventBridge and Lambda
+
+**Objective:** Trigger a Lambda function when an object event occurs in a selected S3 bucket.
+
+**What I implemented / learned:** Created an S3 bucket, enabled EventBridge integration in the bucket properties, created an EventBridge rule to match the required bucket object event and configured Lambda as the target.
+
+**What this solves:** Automates a follow-on action after an S3 event without requiring a continuously running server to poll the bucket.
+
+**Flowchart:**
+
+```mermaid
+flowchart TD
+    A[Create S3 bucket] --> B[Enable EventBridge event delivery]
+    B --> C[Create EventBridge rule]
+    C --> D[Define event pattern for selected bucket event]
+    D --> E[Configure Lambda as rule target]
+    E --> F[Grant EventBridge permission to invoke Lambda]
+    F --> G[Upload or update an object]
+    G --> H[S3 event is delivered to EventBridge]
+    H --> I[EventBridge matches rule]
+    I --> J[Invoke Lambda function]
+    J --> K[Review Lambda execution result and logs]
+```
+
+**Impact:** Creates an event-driven workflow that can process uploads, automate metadata handling or start downstream tasks. The event rule should be scoped to the intended bucket and event type to avoid unnecessary invocations.
+
+### 3.7 Flask container deployment with ECR and ECS Fargate
+
+**Objective:** Package a Flask application into a Docker image, store it in ECR and run it as an ECS service using Fargate.
+
+**What I implemented / learned:** Prepared a Flask application, built a Docker image, pushed the image to ECR, created an ECS task definition, created an ECS cluster and service using Fargate, and verified that the task ran the application on port 8080. The notes also mention checking the application's health endpoint and logs.
+
+**What this solves:** Deploys a containerized application on managed container capacity without manually managing the EC2 container hosts.
+
+**Flowchart:**
+
+```mermaid
+flowchart TD
+    A[Develop Flask application] --> B[Create Dockerfile]
+    B --> C[Build Docker image]
+    C --> D[Test container locally or in the build environment]
+    D --> E[Create ECR repository]
+    E --> F[Authenticate Docker to ECR]
+    F --> G[Tag and push image to ECR]
+    G --> H[Create ECS task definition]
+    H --> I[Specify image, CPU, memory, port 8080 and task role]
+    I --> J[Create ECS cluster with Fargate capacity]
+    J --> K[Create ECS service]
+    K --> L[Run and maintain task]
+    L --> M[Check task status, application endpoint and logs]
+```
+
+**Impact:** Demonstrates the container delivery path from application source to a running ECS task. Fargate reduces host management, while task definitions make container configuration repeatable. Application availability still depends on appropriate networking, health checks, permissions and service configuration.
+
+### 3.8 Private EC2-to-RDS MySQL connectivity
+
+**Objective:** Create an RDS MySQL database and connect to it from an EC2 instance while restricting database network access.
+
+**What I implemented / learned:** Created an RDS MySQL instance, installed a MySQL client on EC2, configured the RDS Security Group to allow the database port from the EC2 Security Group, then connected using the RDS endpoint.
+
+**What this solves:** Keeps database access limited to an approved application or administration host rather than exposing the database directly to the public internet.
+
+**Flowchart:**
+
+```mermaid
+flowchart TD
+    A[Create or select VPC] --> B[Create RDS MySQL instance]
+    B --> C[Keep database private]
+    C --> D[Configure RDS Security Group]
+    D --> E[Allow MySQL port from EC2 Security Group]
+    F[Launch or select EC2 in the VPC] --> G[Install MySQL client]
+    G --> H[Retrieve RDS endpoint]
+    E --> I[Connect from EC2 to RDS endpoint]
+    H --> I
+    I --> J[Test database login and connectivity]
+```
+
+**Impact:** Demonstrates private database access and Security Group referencing. The database can accept traffic only from the configured source, subject to the VPC routing and other network controls.
+
+### 3.9 CloudWatch Agent and VPC Flow Logs
+
+**Objective:** Collect operating-system/application logs from EC2 and network-flow metadata from the VPC in CloudWatch Logs.
+
+**What I implemented / learned:** For EC2 log collection, created and attached an IAM role, installed the CloudWatch Agent package, prepared its configuration and checked the agent status. For VPC Flow Logs, created a CloudWatch log group, configured the IAM delivery role and created the flow log with CloudWatch Logs as the destination.
+
+**What this solves:** Centralizes host logs and VPC traffic metadata for troubleshooting and operational visibility.
+
+**Flowchart A — EC2 CloudWatch Agent:**
+
+```mermaid
+flowchart TD
+    A[Create IAM role with required CloudWatch permissions] --> B[Attach role to EC2 instance]
+    B --> C[Install CloudWatch Agent]
+    C --> D[Prepare agent configuration]
+    D --> E[Start or restart agent]
+    E --> F[Check agent status]
+    F --> G[Agent sends configured logs and metrics]
+    G --> H[Review CloudWatch Log Group and Log Stream]
+```
+
+**Flowchart B — VPC Flow Logs:**
+
+```mermaid
+flowchart TD
+    A[Create CloudWatch Log Group] --> B[Create IAM delivery role]
+    B --> C[Allow VPC Flow Logs service to assume role]
+    C --> D[Grant required CloudWatch Logs delivery permissions]
+    D --> E[Create VPC Flow Log]
+    E --> F[Select CloudWatch Logs destination]
+    F --> G[Associate log group and IAM role]
+    G --> H[Wait for flow log delivery]
+    H --> I[Review network-flow records in CloudWatch Logs]
+```
+
+**Impact:** CloudWatch Agent provides host-level log and metric collection when configured. VPC Flow Logs provide network-flow metadata; they do not capture full packet payloads. These sources help investigate system and network issues from a central console.
 
 ---
 
-## 6. Additional EC2 Security and Monitoring Implementation
+## 4. EC2 Host Security: Fail2ban and msmtp
 
-This section records two hands-on Linux operations exercises completed on AWS EC2: SSH brute-force protection with **Fail2ban**, and centralized host/service monitoring with **Nagios Core + NRPE**. These are additional infrastructure operations exercises alongside the SAA-C03 course notes.
+**Implementation summary:** Installed Fail2ban on an EC2 instance and configured msmtp to send email notifications.
 
-### 6.1 EC2 SSH Protection with Fail2ban
+### Problem addressed
 
-**Objective:** Reduce repeated SSH password-guessing attempts by detecting failed logins and temporarily blocking the source IP address.
+Linux servers exposed to remote login attempts can receive repeated failed authentication attempts. Without host-level detection and response, administrators may have limited visibility into repeated failures and may need to inspect logs manually.
 
-**What problem it addresses**
+### Tools and their purpose
 
-- Repeated failed SSH authentication attempts and basic brute-force activity.
-- Lack of an automated response to repeated authentication failures.
-- Need for visibility into authentication failures and temporary bans.
+| Tool | Purpose | What I learned |
+|---|---|---|
+| Fail2ban | Monitors configured log sources and applies temporary bans when a filter/jail threshold is reached. | Learned how log monitoring, filters, jails, retry thresholds and ban durations work together to respond to repeated failed login attempts. |
+| msmtp | Lightweight SMTP client that sends email through a configured mail provider. | Learned how a Linux host can send alert messages through an SMTP relay and how notification delivery depends on correct SMTP configuration and credentials. |
 
-**How it works**
-
-Fail2ban watches authentication logs (on the Ubuntu systems in these notes, `/var/log/auth.log`). An SSH *jail* applies a filter and configured thresholds. When the number of matching failures exceeds the configured limit within the detection window, Fail2ban invokes a firewall action to block the source IP for the configured ban period. The notes describe the `iptables-multiport` action.
-
-```mermaid
-flowchart TD
-    A[SSH login attempt] --> B[Authentication log]
-    B --> C[Fail2ban SSH filter and jail]
-    C --> D{Failure threshold reached?}
-    D -- No --> E[Continue monitoring]
-    E --> B
-    D -- Yes --> F[Firewall action blocks source IP]
-    F --> G[Ban recorded in Fail2ban log]
-    G --> H[Ban expires or administrator unbans IP]
-```
-
-**What was implemented and learned**
-
-- Installed Fail2ban on an EC2 Linux instance and reviewed its configuration under `/etc/fail2ban/`.
-- Used a local override (`jail.local`) to enable SSH protection and configure the log path, retry limit, detection window and ban duration.
-- Reviewed the role of `fail2ban.conf`, jails, filters and actions. The `sshd` filter identifies failed SSH authentication patterns; the jail defines when and how to respond.
-- Tested the configuration and reviewed ban activity in `/var/log/fail2ban.log` and authentication activity in `/var/log/auth.log`.
-- Tested a manual ban with `fail2ban-client` and reviewed the service status and ban information.
-- Explored incremental ban duration, where repeated activity can result in longer bans, subject to a configured maximum.
-
-**Useful commands from the exercise**
-
-```bash
-sudo apt update
-sudo apt install fail2ban -y
-sudo fail2ban-client -t                 # validate configuration
-sudo fail2ban-client status             # overall status
-sudo fail2ban-client status sshd        # SSH jail status
-sudo tail -f /var/log/fail2ban.log      # Fail2ban activity
-sudo tail -f /var/log/auth.log          # authentication events
-sudo fail2ban-client set sshd banip <TEST_IP>
-```
-
-A typical SSH jail uses settings such as `enabled`, `port`, `filter`, `logpath`, `maxretry`, `findtime` and `bantime`. The notes contain more than one test threshold, so no single retry count or ban duration is represented here as the final production setting. Set values based on the server's access pattern and operational requirements.
-
-**Impact and limitations**
-
-Fail2ban adds an automated, host-level response to repeated authentication failures and can reduce repeated SSH probing from a banned source. It is a defense-in-depth control, not a replacement for SSH key authentication, disabling password login where appropriate, patching, least-privilege access or restrictive EC2 security-group rules. It does not prevent attacks from distributed sources or vulnerabilities unrelated to the monitored logs. Configure trusted administrator addresses carefully to avoid accidental lockout.
-
-### 6.2 Outbound Email with msmtp
-
-**Purpose:** `msmtp` is a lightweight SMTP client. It sends outbound email through an SMTP provider; it is not itself a mailbox server. In this setup, `msmtp-mta` provides a sendmail-compatible interface that monitoring tools can use, while `bsd-mailx` provides a convenient command-line mail utility.
-
-**What was configured / learned**
-
-- Installed `msmtp`, `msmtp-mta` and `bsd-mailx` on the monitoring host.
-- Created a system-wide configuration at `/etc/msmtprc` with the SMTP host, account, sender and TLS settings.
-- Set restrictive permissions on the configuration file because it can contain mail credentials.
-- Tested outbound delivery using `msmtp` before connecting it to Nagios notifications.
-
-```bash
-sudo apt install msmtp msmtp-mta bsd-mailx -y
-sudo nano /etc/msmtprc
-sudo chmod 600 /etc/msmtprc
-printf 'Subject: SMTP test\n\nTest message from the monitoring host.\n' | msmtp <RECIPIENT_EMAIL>
-```
-
-Use provider-specific SMTP host, port and TLS settings. Credentials and real sender/recipient addresses are intentionally not included in this document. Keep secrets out of Git, restrict file access, and use a dedicated mail account or secret-management method where possible.
-
-> The source notes document the SMTP setup and Nagios contact/email-alert configuration. They do not clearly show a complete Fail2ban-specific email action being wired and tested, so this report does not claim that Fail2ban email notifications were fully enabled.
-
-### 6.3 Centralized EC2 Monitoring with Nagios Core and NRPE
-
-**Objective:** Monitor two remote EC2 instances from one central EC2 monitoring server and send email notifications when configured host or service checks enter problem states.
-
-**Problem addressed**
-
-Without a central monitoring view, administrators may need to connect to each server separately to check availability and resource health. Nagios provides a central status dashboard and scheduled checks; NRPE allows the monitoring server to request approved plugin checks on remote Linux hosts.
-
-**Architecture**
-
-- **Monitoring EC2:** Runs Nagios Core, local Nagios plugins and the `nagios-nrpe-plugin` client-side check plugin.
-- **Two remote EC2 instances:** Run the NRPE daemon (`nagios-nrpe-server`) and the Nagios plugins used to inspect local resources.
-- **Network:** The monitoring server reaches each remote NRPE service over TCP 5666. Permit this port only from the monitoring server or its security group. ICMP is also needed if ICMP/ping checks are configured.
-- **Notifications:** Nagios contact/contact-group settings and notification commands use the configured mail transport (`msmtp`) to send email through the SMTP provider.
+### Implementation workflow
 
 ```mermaid
 flowchart TD
-    A[Nagios Core on monitoring EC2] --> B[NRPE check plugin]
-    B -->|TCP 5666| C[NRPE daemon on remote EC2 1]
-    B -->|TCP 5666| D[NRPE daemon on remote EC2 2]
-    C --> E[Remote plugins: load, disk, other checks]
-    D --> F[Remote plugins: load, disk, other checks]
-    E --> A
-    F --> A
-    A --> G[Evaluate host and service states]
-    G --> H{Notification condition met?}
-    H -- No --> I[Continue scheduled checks]
-    H -- Yes --> J[Nagios contact / notification command]
-    J --> K[msmtp SMTP client]
-    K --> L[SMTP provider]
-    L --> M[Configured email recipient]
+    A[EC2 Linux instance] --> B[Install Fail2ban]
+    B --> C[Review authentication log source]
+    C --> D[Configure Fail2ban jail and filter]
+    D --> E[Set retry threshold and ban duration]
+    E --> F[Start and enable Fail2ban]
+    G[Configure msmtp SMTP settings securely] --> H[Test SMTP email delivery]
+    F --> I[Repeated authentication failures are detected]
+    I --> J{Jail threshold reached?}
+    J -- No --> C
+    J -- Yes --> K[Fail2ban applies configured ban action]
+    K --> L[Send notification using msmtp]
+    L --> M[Administrator receives email alert]
 ```
 
-**What was implemented and learned**
+### What I learned
 
-- Installed Nagios Core on a main EC2 instance and installed the required Nagios plugins. The initial dashboard issue recorded in the notes was resolved after installing the plugins.
-- Installed `nagios-nrpe-plugin` on the monitoring server so Nagios can request remote checks.
-- Installed `nagios-nrpe-server` and Nagios plugins on each of the two remote EC2 instances, enabled the NRPE service, and configured the remote host's `nrpe.cfg` to allow the monitoring server.
-- Created host definitions under `/usr/local/nagios/etc/servers/` and added the directory to `nagios.cfg` using `cfg_dir` so Nagios loads the remote-host definitions.
-- Added host and service checks. The notes show checks for host reachability (PING), SSH, CPU load and disk usage.
-- Configured Nagios contacts/contact groups and notification settings, then connected email delivery through `msmtp`.
-- Learned how host definitions, service definitions, commands, plugins, check intervals, retry attempts, notification intervals and notification periods work together.
+- How Fail2ban uses log entries and filters to identify repeated failed authentication attempts.
+- How jails define the monitored service, retry threshold, observation window and ban duration.
+- How a ban action can temporarily block an offending source according to the configured firewall action.
+- How msmtp acts as an SMTP client for sending alert emails from a Linux host.
+- How to test log detection, ban behavior, unban/recovery and email delivery.
 
-**Key setup commands recorded in the notes**
+### Use and operational impact
 
-On each remote EC2 instance:
+This setup can reduce exposure to repeated brute-force login attempts by applying configured temporary bans and can notify an administrator when a jail is triggered. Email notifications make security events more visible without requiring the administrator to continuously watch the host logs.
 
-```bash
-sudo apt update
-sudo apt install nagios-nrpe-server nagios-plugins -y
-sudo systemctl enable --now nagios-nrpe-server
-sudo nano /etc/nagios/nrpe.cfg
+**Impact statement:** The implementation adds a host-level response and notification mechanism. It does not replace strong SSH authentication, patching, least-privilege access, network restrictions, centralized logging or a broader incident-response process. No number of blocked attacks or measurable reduction in incidents is claimed here.
+
+---
+
+## 5. Centralized Infrastructure Monitoring: Nagios Core and NRPE
+
+**Implementation summary:** Installed Nagios Core on a main EC2 instance, installed/configured NRPE and plugins on two additional EC2 instances, and configured email notifications for alerts based on monitoring states and thresholds.
+
+### Problem addressed
+
+When multiple EC2 instances are managed separately, it can be difficult to check host availability and service health from one place. A centralized monitoring server gives administrators a single view of configured hosts and checks.
+
+### Tools and their purpose
+
+| Tool | Purpose | What I learned |
+|---|---|---|
+| Nagios Core | Central monitoring engine that schedules checks, evaluates results and displays host/service states. | Learned how to define hosts, services, check intervals, thresholds, alert states and notification contacts. |
+| NRPE | Allows the Nagios server to run approved checks on remote hosts through the NRPE agent/service. | Learned how a central monitoring server communicates with remote EC2 instances to execute local plugins. |
+| Nagios Plugins | Scripts/programs that perform individual checks such as disk, load, memory or service checks. | Learned how plugins return status and output for Nagios to evaluate. |
+| Email notification | Sends alerts when configured host or service state/notification conditions are met. | Learned how monitoring results can notify an operator instead of relying only on dashboard checks. |
+
+### Architecture and monitoring workflow
+
+```mermaid
+flowchart TD
+    A[Main EC2 instance] --> B[Install Nagios Core]
+    B --> C[Install/configure Nagios plugins]
+    C --> D[Define two remote EC2 hosts]
+    E[Remote EC2 instance 1] --> F[Install NRPE and required plugins]
+    G[Remote EC2 instance 2] --> H[Install NRPE and required plugins]
+    F --> I[Configure NRPE allowed hosts and checks]
+    H --> J[Configure NRPE allowed hosts and checks]
+    I --> K[Allow monitoring traffic from Nagios server]
+    J --> K
+    K --> L[Nagios Core schedules remote checks]
+    D --> L
+    L --> M[NRPE executes approved plugin checks]
+    M --> N[Plugin results returned to Nagios]
+    N --> O{Result within configured threshold?}
+    O -- Yes --> P[Update host/service status]
+    O -- No --> Q[Set warning or critical state]
+    Q --> R[Evaluate notification rules]
+    R --> S[Send email notification]
+    P --> T[View status in Nagios dashboard]
+    S --> T
 ```
 
-In `nrpe.cfg`, restrict `allowed_hosts` to localhost and the monitoring server's private address as appropriate for the installed NRPE mode. Define only the remote check commands that Nagios is permitted to execute, then restart the NRPE service after changes.
+### What I learned
 
-On the Nagios monitoring EC2 instance:
+- How to install and configure Nagios Core on a central monitoring host.
+- How to define remote EC2 instances as Nagios hosts.
+- How NRPE allows Nagios to request checks from remote machines.
+- How plugins report check results and how warning/critical thresholds are evaluated.
+- How to configure email notifications for host/service alerts.
+- Why network access, allowed-host configuration, plugin permissions and check definitions must match between the central and remote hosts.
 
-```bash
-sudo apt install nagios-nrpe-plugin -y
-sudo mkdir -p /usr/local/nagios/etc/servers/
-sudo nano /usr/local/nagios/etc/servers/host.cfg
-sudo nano /usr/local/nagios/etc/nagios.cfg
-sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
-sudo systemctl restart nagios
-```
+### Use and operational impact
 
-The main configuration must include the remote-host directory, for example:
+The setup provides centralized visibility into the two monitored EC2 instances and their configured host/service checks. When a check crosses its configured warning or critical threshold, Nagios can change the state and send an email notification based on the notification settings.
 
-```cfg
-cfg_dir=/usr/local/nagios/etc/servers
-```
+**Impact statement:** Centralized checks and notifications can reduce the time required to notice infrastructure issues and provide a starting point for troubleshooting. The actual coverage depends on which checks, thresholds, intervals and notification rules are configured. The report does not claim monitoring of metrics that were not configured or measured.
 
-A host definition records a unique host name, alias, private address, check period, retry count and notification schedule. Repeat the host definition for the second remote EC2 instance. Service definitions then attach checks to each host and invoke the relevant local or NRPE plugin command.
+---
 
-**Validation recorded in the notes**
+## 6. Other Practical Learning Summaries
 
-- Confirm that both remote hosts appear in the Nagios interface.
-- Confirm that host status is `UP` and configured services report `OK` when healthy.
-- Validate the Nagios configuration before restarting it:
-  `sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg`
-- Check the installed plugin directory:
-  `ls -la /usr/local/nagios/libexec/`
-- The notes include a local ping-plugin test using warning thresholds of 100 ms / 20% packet loss and critical thresholds of 200 ms / 50% packet loss. These are example lab thresholds, not recommended universal production values.
-- Test email delivery separately, then perform a controlled test of a notification condition and confirm receipt by the configured contact.
+These exercises are included briefly because the notes describe practical work, but they do not need separate full flowcharts in this report.
 
-**Impact and limitations**
+| Practical exercise | What I did / learned | Why it is useful |
+|---|---|---|
+| CloudFormation | Prepared a YAML template, uploaded it to S3 and used it to create a CloudFormation stack. | Repeats infrastructure deployments from a declared template and reduces manual console steps. |
+| IAM role and policy | Created a user with limited permissions, created a role with a trust relationship and permission policy, and tested role switching. | Demonstrates separation of identity, trust and permissions; supports temporary, scoped access. |
+| Systems Manager Session Manager | Attached the required IAM role to EC2 instances and used Session Manager to access managed instances without opening inbound SSH for the session path. | Provides centrally controlled access and reduces dependency on managing SSH keys and inbound port 22. |
+| EC2 SSH key recovery | Practiced recovering access using EC2 Instance Connect and a helper EC2/EBS-volume method. | Provides recovery options if the original SSH private key is lost, subject to access and recovery prerequisites. |
+| AWS Organizations and SCP | Created an organization/account structure and tested an SCP restriction on permitted EC2 instance types. | Demonstrates organization-level permission guardrails. An SCP sets the maximum available permissions; it does not grant permissions by itself. |
+| IAM Identity Center | Enabled Identity Center, created a user and permission set, assigned it to an account and tested sign-in. | Centralizes user access to multiple AWS accounts through permission sets. |
+| Billing alert and budget | Configured a billing alert with an SNS notification path and reviewed AWS Budgets and cost allocation tags. | Provides earlier visibility into estimated charges and helps categorize spend. |
+| Route 53 private hosted zone | Created a private hosted zone and DNS record to resolve an EC2 host using an internal name from within the associated VPC. | Simplifies internal name resolution without exposing the record through public DNS. |
+| Glue Crawler and Athena | Created an S3 location for CSV data, configured a Glue crawler and IAM access, then queried the cataloged data using Athena. | Useful for cataloguing files in S3 and querying them with SQL without setting up a separate database server. |
 
-The implementation provides one place to view the health of the two remote EC2 instances and their configured checks. Threshold-based checks can make administrators aware of reachability, CPU-load or disk-usage problems earlier, while email notifications reduce the need to continuously watch the dashboard. Nagios reports the conditions represented by its checks; it does not automatically fix a failed service unless an appropriate remediation or event-handler workflow is separately configured. Monitoring coverage is only as good as the selected plugins, thresholds and check intervals.
+---
 
-### 6.4 Key Learnings and Production Considerations
+## 7. What I Learned Overall
 
-| Area | Learning / operational value |
-|---|---|
-| Linux security | Authentication logs, Fail2ban filters and jails, ban policies and firewall actions |
-| Email delivery | SMTP client setup, TLS settings, protected configuration files and delivery testing |
-| Monitoring | Nagios Core, host/service objects, plugins, NRPE client/server roles and thresholds |
-| Network security | Restrict remote monitoring access to the monitoring host; do not expose NRPE broadly |
-| Alerting | Contacts, contact groups, notification periods, retry behavior and alert verification |
+The biggest thing I took away from this learning was how closely the AWS services are connected. A VPC and its route tables decide how resources communicate; IAM controls who can access or change them; load balancers and Auto Scaling help applications handle traffic; and monitoring tools show what is happening after everything is running. Working through the practical exercises made those relationships much clearer than studying the services separately.
 
-Before using this pattern in production, review the SSH policy and trusted-address allowlist, restrict NRPE network access, use encrypted NRPE communication supported by the installed versions, protect SMTP credentials, back up Nagios configuration, and test both failure alerts and recovery notifications. The notes mention enabling NRPE command arguments (`dont_blame_nrpe=1`); avoid enabling arbitrary remote command arguments unless there is a specific reviewed requirement. Prefer fixed, explicitly defined remote command aliases.
+I now have practical experience with:
 
-**Scope and redaction:** This section is based on the supplied Fail2ban, NRPE, Nagios and email-configuration notes. Personal email addresses, SMTP server/account details, passwords, public/private IP addresses and other environment-specific identifiers have been excluded. Exact software versions, final thresholds and every notification command were not consistently recorded, so they are not presented as confirmed configuration values.
+- Creating a VPC with public and private subnets, route tables, an Internet Gateway, a NAT Gateway and an S3 Gateway Endpoint.
+- Launching and managing EC2 instances, controlling access with Security Groups and IAM roles, and using different ways to recover or access an instance.
+- Putting an application behind an HTTPS Application Load Balancer, using ACM certificates and Route 53 records, and routing requests by hostname.
+- Testing EC2 Auto Scaling by generating CPU load and watching the Auto Scaling Group respond to CloudWatch metrics.
+- Hosting a simple static website in S3 and connecting an S3 upload event to Lambda through EventBridge.
+- Building a Flask container image, pushing it to ECR and running it as an ECS Fargate service.
+- Connecting an EC2 instance to a private RDS MySQL database through Security Group rules.
+- Sending EC2 logs and VPC Flow Logs to CloudWatch for easier troubleshooting.
+- Adding Fail2ban and email alerts to an EC2 host, then setting up Nagios Core and NRPE to monitor two other EC2 instances from one place.
+
+I also spent time with CloudFormation, IAM roles and policies, Systems Manager, AWS Organizations, billing alerts and cost tools. These topics helped me understand the administration around an AWS environment, not just how to launch resources.
+
+Overall, I am more comfortable following an AWS setup from the network and access configuration through to deployment and monitoring. I still have more to practise, but I now have a useful base of notes and hands-on exercises that I can return to when working on similar environments.
+
+
+---
+
+## 8. What I'd Like to Work on Next
+
+After spending time learning AWS and practising different services using my own AWS account, I'd like to start applying what I've learned to the team's environment and take on more hands-on work.
+
+- **Take on more tasks:** I have some availability and would like to use that time productively. Please let me know where I can help or whether there are any pending tasks I could pick up.
+- **Work on real project tasks:** The practical exercises have made me more confident working with AWS. I'd like the opportunity to contribute to real project work and gradually take on production-related tasks with the right guidance.
+- **Understand the existing AWS environment:** It would be helpful to get the appropriate access to our AWS account so I can review the current infrastructure, understand how the services are connected, and assist with basic troubleshooting or debugging when needed. I'm happy to work with the access level and permissions you consider suitable.
+
+I had also spoken to X and Y about getting more involved in the actual work. I wanted to mention it here as well and check where I could start contributing.
+
+---
+
+## References
+
+- [AWS Documentation](https://docs.aws.amazon.com/)
+- [AWS Certified Solutions Architect – Associate](https://aws.amazon.com/certification/certified-solutions-architect-associate/)
+- [Udemy SAA-C03 Course](https://www.udemy.com/course/new-aws-certified-solutions-architect-associate-saa-c03/)
+- [Nagios Core Documentation](https://www.nagios.org/documentation/)
+- [Fail2ban Documentation](https://github.com/fail2ban/fail2ban)
+- [msmtp Documentation](https://marlam.de/msmtp/)
 
