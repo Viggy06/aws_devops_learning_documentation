@@ -38,8 +38,8 @@
 - [4. EC2 Host Security: Fail2ban and msmtp](#4-ec2-host-security-fail2ban-and-msmtp)
 - [5. Centralized Infrastructure Monitoring: Nagios Core and NRPE](#5-centralized-infrastructure-monitoring-nagios-core-and-nrpe)
 - [6. Other Practical Learning Summaries](#6-other-practical-learning-summaries)
-- ## **[7. What I Learned Overall](#7-what-i-learned-overall)** ##
-- ## **[8. What I'd Like to Work on Next](#8-what-id-like-to-work-on-next)** ##
+- **[7. What I Learned Overall](#7-what-i-learned-overall)**
+- **[8. What I'd Like to Work on Next](#8-what-id-like-to-work-on-next)**
 
 ---
 
