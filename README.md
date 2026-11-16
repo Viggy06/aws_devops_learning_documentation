@@ -38,8 +38,8 @@
 - [4. EC2 Host Security: Fail2ban and msmtp](#4-ec2-host-security-fail2ban-and-msmtp)
 - [5. Centralized Infrastructure Monitoring: Nagios Core and NRPE](#5-centralized-infrastructure-monitoring-nagios-core-and-nrpe)
 - [6. Other Practical Learning Summaries](#6-other-practical-learning-summaries)
-- **[7. What I Learned Overall](#7-what-i-learned-overall)**
-- **[8. What I'd Like to Work on Next](#8-what-id-like-to-work-on-next)**
+- ## **[7. What I Learned Overall](#7-what-i-learned-overall)** ##
+- ## **[8. What I'd Like to Work on Next](#8-what-id-like-to-work-on-next)** ##
 
 ---
 
@@ -599,7 +599,7 @@ Overall, I am more comfortable following an AWS setup from the network and acces
 
 ---
 
-**## 8. What I'd Like to Work on Next**
+## **8. What I'd Like to Work on Next** ##
 [!IMPORTANT]
 After spending time learning AWS and practising different services using my own AWS account, I'd like to start applying what I've learned to the team's environment and take on more hands-on work.
 
