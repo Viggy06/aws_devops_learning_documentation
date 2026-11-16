@@ -50,7 +50,6 @@ nav:
       - CloudFormation: projects/10-cloudformation-vpc.md
       - CloudWatch: projects/11-cloudwatch-ec2-monitoring.md
       - Systems Manager: projects/12-ssm-session-manager.md
-      - VPC Flow Logs: projects/13-vpc-flow-logs.md
 
   - Security and Operations:
       - SSH Key Recovery: projects/13-ec2-ssh-key-recovery.md
