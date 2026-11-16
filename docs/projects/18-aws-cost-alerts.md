@@ -18,18 +18,22 @@ Cost alerts provide an early warning when spending reaches a chosen limit and he
 **Flowchart**
 ```mermaid
 flowchart TD
-    A["Enable Billing Alerts in Billing Preferences"] --> B["CloudWatch Billing Metrics"]
-    B --> C["Create Billing Alarm"]
-    C --> D["Set Threshold: $5"]
-    D --> E{"Estimated Charges Above Threshold?"}
+    subgraph CW["CloudWatch Billing Alarm"]
+        A["Enable Billing Alerts in Billing Preferences"] --> B["CloudWatch Billing Metrics"]
+        B --> C["Create Billing Alarm"]
+        C --> D["Set Threshold: $5"]
+        D --> E{"Estimated Charges Above Threshold?"}
 
-    E -->|"Yes"| F["Alarm Enters ALARM State"]
-    F --> G["SNS Topic"]
-    G --> H["Email Subscriber"]
+        E -->|"Yes"| F["Alarm Enters ALARM State"]
+        F --> G["SNS Topic"]
+        G --> H["Email Subscriber"]
 
-    E -->|"No"| B
+        E -->|"No"| B
+    end
 
-    I["Create AWS Budget"] --> J["Configure Budget Threshold"]
-    J --> K["Configure Budget Notifications"]
-    K --> L["Email Notification"]
+    subgraph AB["AWS Budget Alerts"]
+        I["Create AWS Budget"] --> J["Configure Budget Threshold"]
+        J --> K["Configure Budget Notifications"]
+        K --> L["Email Notification"]
+    end
 ```

@@ -18,13 +18,16 @@ It provides a managed administration path for private instances and can reduce t
 **Flowchart**
 ```mermaid
 flowchart TD
-    A["Prepare EC2 Instance"] --> B["Verify SSM Agent"]
-    B --> C["Create IAM Instance Role"]
-    C --> D["Attach Role to EC2"]
-    D --> E["EC2 Registers with Systems Manager"]
+    A[Prepare EC2 Instance] --> B[Verify SSM Agent]
+    B --> C[Create IAM Instance Role]
+    C --> D[Attach Role to EC2]
+    D --> E[EC2 Registers with Systems Manager]
 
-    F["User with Session Manager IAM Permission"] --> G["Open Session Manager"]
-    G --> H["Select Managed EC2 Instance"]
-    H --> I["Start Session"]
-    I --> J["Secure Terminal Access"]
+    F[User with Session Manager IAM Permission] --> G[Open Session Manager]
+
+    E --> H[Select Managed EC2 Instance]
+    G --> H
+
+    H --> I[Start Session]
+    I --> J[Secure Terminal Access]
 ```

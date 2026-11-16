@@ -24,7 +24,10 @@ flowchart TD
     D --> E["Map db.mytestapp.com to Private EC2 IP"]
 
     F["Client EC2 Instance"] --> G["DNS Lookup"]
-    G --> H["Route 53 Private Hosted Zone"]
+
+    E --> H["Route 53 Private Hosted Zone"]
+    G --> H
+
     H --> I["Return Private IP Address"]
     I --> J["Connect to Target EC2 Using DNS Name"]
 ```
