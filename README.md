@@ -15,17 +15,15 @@ A short index of the AWS and Linux infrastructure tasks I have worked on. Each n
 | [Flask deployment on ECS Fargate](projects/07-ecs-fargate-flask.md) | Docker image, ECR, ECS task definition, service and health check |
 | [Private RDS MySQL connectivity](projects/08-ec2-private-rds-mysql.md) | EC2-to-RDS connection controlled by security groups |
 | [API using Lambda and DynamoDB](projects/09-lambda-api-dynamodb.md) | DynamoDB table, Lambda permissions and API Gateway |
-| [Querying S3 data with Glue and Athena](projects/10-glue-athena-s3-csv.md) | CSV crawler, Glue Data Catalog and SQL query |
-| [VPC deployment with CloudFormation](projects/11-cloudformation-vpc.md) | YAML template uploaded to S3 and deployed as a stack |
-| [EC2 monitoring with CloudWatch](projects/12-cloudwatch-ec2-monitoring.md) | CloudWatch Agent, IAM role, metrics, alarm and notification |
-| [VPC Flow Logs](projects/13-vpc-flow-logs.md) | Capturing network-flow metadata and sending it to CloudWatch Logs |
-| [EC2 access with Systems Manager](projects/14-ssm-session-manager.md) | Session Manager access to managed instances |
-| [EC2 SSH key recovery](projects/15-ec2-ssh-key-recovery.md) | Recovering access and replacing an instance's authorized key |
-| [IAM, Organizations and SCP](projects/16-iam-organizations-scp.md) | Role assumption, member accounts, policy restrictions and Identity Center |
-| [Fail2ban on EC2](projects/17-fail2ban-ec2-protection.md) | Detecting repeated login failures and applying host-level bans |
-| [Centralized EC2 monitoring with Nagios](projects/18-nagios-core-nrpe-monitoring.md) | Nagios Core, NRPE, remote checks and notifications |
-| [Route 53 private DNS](projects/19-route53-private-dns.md) | Resolving internal resources using a private hosted zone |
-| [AWS billing alerts and budgets](projects/20-aws-cost-alerts.md) | Billing alarm, SNS notification and budget tracking |
+| [VPC deployment with CloudFormation](projects/10-cloudformation-vpc.md) | YAML template uploaded to S3 and deployed as a stack |
+| [EC2 monitoring with CloudWatch](projects/11-cloudwatch-ec2-monitoring.md) | CloudWatch Agent, IAM role, metrics, alarm and notification |
+| [EC2 access with Systems Manager](projects/12-ssm-session-manager.md) | Session Manager access to managed instances |
+| [EC2 SSH key recovery](projects/13-ec2-ssh-key-recovery.md) | Recovering access and replacing an instance's authorized key |
+| [IAM, Organizations and SCP](projects/14-iam-organizations-scp.md) | Role assumption, member accounts, policy restrictions and Identity Center |
+| [Fail2ban on EC2](projects/15-fail2ban-ec2-protection.md) | Detecting repeated login failures and applying host-level bans |
+| [Centralized EC2 monitoring with Nagios](projects/16-nagios-core-nrpe-monitoring.md) | Nagios Core, NRPE, remote checks and notifications |
+| [Route 53 private DNS](projects/17-route53-private-dns.md) | Resolving internal resources using a private hosted zone |
+| [AWS billing alerts and budgets](projects/18-aws-cost-alerts.md) | Billing alarm, SNS notification and budget tracking |
 
 These are hands-on lab exercises and learning implementations. They are not presented as production deployments.
 
@@ -55,4 +53,4 @@ I'd like to use my available time to contribute to the team's work and build on 
 - **Work on real project tasks:** I'd like to apply what I've learned to the team's environment and gradually take on production-related work with guidance.
 - **Understand the AWS setup:** Appropriate access to the AWS account would help me review the existing infrastructure, understand how the services are connected, and assist with troubleshooting or debugging when needed. I'm happy to start with read-only access and use whichever permissions are suitable.
 
-I had also spoken to X and Y about getting more involved in the actual work. I wanted to mention it here as well and check where I could start contributing.
+I had also spoken to Yatin Sir and Kartik Sir about getting more involved in the actual work. I wanted to mention it here as well and check where I could start contributing.
