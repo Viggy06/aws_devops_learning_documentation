@@ -38,8 +38,8 @@
 - [4. EC2 Host Security: Fail2ban and msmtp](#4-ec2-host-security-fail2ban-and-msmtp)
 - [5. Centralized Infrastructure Monitoring: Nagios Core and NRPE](#5-centralized-infrastructure-monitoring-nagios-core-and-nrpe)
 - [6. Other Practical Learning Summaries](#6-other-practical-learning-summaries)
-- [7. What I Learned Overall](#7-what-i-learned-overall)
-- [8. What I'd Like to Work on Next](#8-what-id-like-to-work-on-next)
+- **[7. What I Learned Overall](#7-what-i-learned-overall)**
+- **[8. What I'd Like to Work on Next](#8-what-id-like-to-work-on-next)**
 
 ---
 
@@ -490,11 +490,11 @@ flowchart TD
 - How msmtp acts as an SMTP client for sending alert emails from a Linux host.
 - How to test log detection, ban behavior, unban/recovery and email delivery.
 
-### Use and operational impact
+## Fail2ban – Extra Notes
 
-This setup can reduce exposure to repeated brute-force login attempts by applying configured temporary bans and can notify an administrator when a jail is triggered. Email notifications make security events more visible without requiring the administrator to continuously watch the host logs.
-
-**Impact statement:** The implementation adds a host-level response and notification mechanism. It does not replace strong SSH authentication, patching, least-privilege access, network restrictions, centralized logging or a broader incident-response process. No number of blocked attacks or measurable reduction in incidents is claimed here.
+- Fail2ban can also help protect application APIs from brute-force attempts by monitoring application logs and temporarily banning IP addresses after repeated failed requests.
+- This provides an additional layer of protection against repeated authentication attempts and suspicious activity.
+- However, it is not a replacement for a dedicated API rate-limiting solution, which controls how many requests a client can make within a specific time period.
 
 ---
 
@@ -599,15 +599,15 @@ Overall, I am more comfortable following an AWS setup from the network and acces
 
 ---
 
-## 8. What I'd Like to Work on Next
-
+**## 8. What I'd Like to Work on Next**
+[!IMPORTANT]
 After spending time learning AWS and practising different services using my own AWS account, I'd like to start applying what I've learned to the team's environment and take on more hands-on work.
 
 - **Take on more tasks:** I have some availability and would like to use that time productively. Please let me know where I can help or whether there are any pending tasks I could pick up.
 - **Work on real project tasks:** The practical exercises have made me more confident working with AWS. I'd like the opportunity to contribute to real project work and gradually take on production-related tasks with the right guidance.
 - **Understand the existing AWS environment:** It would be helpful to get the appropriate access to our AWS account so I can review the current infrastructure, understand how the services are connected, and assist with basic troubleshooting or debugging when needed. I'm happy to work with the access level and permissions you consider suitable.
 
-I had also spoken to X and Y about getting more involved in the actual work. I wanted to mention it here as well and check where I could start contributing.
+I had also spoken to Yatin Sir and Kartik Sir about getting more involved in the actual work. I wanted to mention it here as well and check where I could start contributing.
 
 ---
 
