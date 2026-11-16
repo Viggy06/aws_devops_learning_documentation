@@ -1,10 +1,11 @@
 # API Using Lambda and DynamoDB
 
 **Concept**
-DynamoDB stores application data in a managed NoSQL table. Lambda can read that data, and API Gateway can expose the function through an HTTP API.
+- DynamoDB stores application data in a managed NoSQL table.
+- Lambda can read that data, and API Gateway can expose the function through an HTTP API.
 
 **What I worked on**
-I created a DynamoDB table and sample items, wrote a Lambda function to read the table, and exposed the function through API Gateway.
+- I created a DynamoDB table and sample items, wrote a Lambda function to read the table, and exposed the function through API Gateway.
 
 **How I did it**
 - Created a DynamoDB table with its key configuration and added items.
@@ -14,11 +15,11 @@ I created a DynamoDB table and sample items, wrote a Lambda function to read the
 - Tested the endpoint from a browser.
 
 **Problem it solves**
-This pattern exposes data through an API without running a dedicated application server or managing database infrastructure.
+- This pattern exposes data through an API without running a dedicated application server or managing database infrastructure.
 
 **Flowchart**
 ```mermaid
-flowchart TD
+flowchart LR
     A["Create DynamoDB Table"] --> B["Add Sample Items"]
     C["Create Lambda Function"] --> D["Create Lambda IAM Role"]
     D --> E["Allow DynamoDB Read Access"]

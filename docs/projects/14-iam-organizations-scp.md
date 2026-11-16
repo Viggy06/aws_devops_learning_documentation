@@ -1,10 +1,11 @@
 # IAM, AWS Organizations and Service Control Policies
 
 **Concept**
-IAM policies define permissions for identities and resources. AWS Organizations manages multiple accounts, and Service Control Policies (SCPs) set the maximum permissions available in member accounts.
+- IAM policies define permissions for identities and resources.
+- AWS Organizations manages multiple accounts, and Service Control Policies (SCPs) set the maximum permissions available in member accounts.
 
 **What I worked on**
-I created an Organization and a member account, applied an SCP restricting EC2 instance types in a test account, and set up an IAM Identity Center user with a limited permission set.
+- I created an Organization and a member account, applied an SCP restricting EC2 instance types in a test account, and set up an IAM Identity Center user with a limited permission set.
 
 **How I did it**
 - Created the Organization and added a member account.
@@ -12,12 +13,13 @@ I created an Organization and a member account, applied an SCP restricting EC2 i
 - Enabled IAM Identity Center, created a user and permission set, and assigned access to the account.
 
 **Problem it solves**
-These controls help manage access across accounts and apply guardrails centrally. An SCP limits what identities can do; it does not grant permissions by itself.
+- These controls help manage access across accounts and apply guardrails centrally.
+- An SCP limits what identities can do; it does not grant permissions by itself.
 
 **Flowchart**
 ### 1. AWS Organizations and SCP
 ```mermaid
-flowchart TD
+flowchart LR
     A["Create AWS Organization"] --> B["Create Member Account"]
     B --> C["Create SCP Policy"]
     C --> D["Restrict EC2 Instance Types"]

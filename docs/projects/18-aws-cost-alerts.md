@@ -1,10 +1,10 @@
 # AWS Billing Alerts and Budgets
 
 **Concept**
-CloudWatch billing alarms and AWS Budgets help track cloud spending and notify account owners when configured cost thresholds are reached.
+- CloudWatch billing alarms and AWS Budgets help track cloud spending and notify account owners when configured cost thresholds are reached.
 
 **What I worked on**
-I created a billing alarm for a $5 threshold with an SNS email notification and configured an AWS Budget.
+- I created a billing alarm for a $5 threshold with an SNS email notification and configured an AWS Budget.
 
 **How I did it**
 - Created an SNS topic and configured the email subscription.
@@ -13,11 +13,11 @@ I created a billing alarm for a $5 threshold with an SNS email notification and 
 - Created an AWS Budget to track account spending.
 
 **Problem it solves**
-Cost alerts provide an early warning when spending reaches a chosen limit and help avoid unexpected charges during hands-on testing.
+- Cost alerts provide an early warning when spending reaches a chosen limit and help avoid unexpected charges during hands-on testing.
 
 **Flowchart**
 ```mermaid
-flowchart TD
+flowchart LR
     A["Enable Billing Alerts in Billing Preferences"] --> B["CloudWatch Billing Metrics"]
     B --> C["Create Billing Alarm"]
     C --> D["Set Threshold: $5"]

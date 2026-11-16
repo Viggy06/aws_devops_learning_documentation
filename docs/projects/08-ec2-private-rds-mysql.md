@@ -1,10 +1,11 @@
 # EC2 Connection to a Private RDS MySQL Database
 
 **Concept**
-RDS provides a managed relational database. A private database can accept connections from approved workloads inside the VPC without being publicly accessible.
+- RDS provides a managed relational database.
+- A private database can accept connections from approved workloads inside the VPC without being publicly accessible.
 
 **What I worked on**
-I created an RDS MySQL database with public access disabled and connected to it from an EC2 instance.
+- I created an RDS MySQL database with public access disabled and connected to it from an EC2 instance.
 
 **How I did it**
 - Created the RDS MySQL database in the VPC.
@@ -13,11 +14,11 @@ I created an RDS MySQL database with public access disabled and connected to it 
 - Connected using the RDS endpoint and database credentials.
 
 **Problem it solves**
-The application server can communicate with its database over the VPC network while the database remains unavailable for direct public connections.
+- The application server can communicate with its database over the VPC network while the database remains unavailable for direct public connections.
 
 **Flowchart**
 ```mermaid
-flowchart TD
+flowchart LR
     A["Create RDS MySQL Database"] --> B["Keep Database Private"]
     C["Launch EC2 Instance"] --> D["Install MySQL Client"]
 

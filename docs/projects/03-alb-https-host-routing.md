@@ -1,10 +1,11 @@
 # Application Load Balancer with HTTPS and Host-Based Routing
 
 **Concept**
-An Application Load Balancer routes HTTP and HTTPS requests to target groups based on listener rules, including the hostname in a request.
+- An Application Load Balancer routes HTTP and HTTPS requests to target groups based on listener rules, including the hostname in a request.
 
 **What I worked on**
-I configured an ALB with EC2 target groups, added HTTPS using an ACM certificate, and routed two hostnames to separate target groups. I also tested load-balancer stickiness.
+- I configured an ALB with EC2 target groups, added HTTPS using an ACM certificate, and routed two hostnames to separate target groups.
+- I also tested load-balancer stickiness.
 
 **How I did it**
 - Created the ALB and target groups for the EC2 instances.
@@ -14,11 +15,11 @@ I configured an ALB with EC2 target groups, added HTTPS using an ACM certificate
 - Tested routing and configured a load-balancer-generated sticky session.
 
 **Problem it solves**
-One ALB can provide HTTPS access and route multiple domains or applications to the correct backend without exposing each EC2 instance directly.
+- One ALB can provide HTTPS access and route multiple domains or applications to the correct backend without exposing each EC2 instance directly.
 
 **Flowchart**
 ```mermaid
-flowchart TD
+flowchart LR
     ACM["Request ACM Certificate"] --> DNS["Create DNS Validation Record"]
     DNS --> CERT["Certificate Validated"]
     CERT --> LISTENER["Configure ALB HTTPS Listener :443"]
