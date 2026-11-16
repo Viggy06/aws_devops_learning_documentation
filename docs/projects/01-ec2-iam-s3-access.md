@@ -1,12 +1,10 @@
 # EC2 and IAM Role-Based S3 Access
 
 **Concept**
-- EC2 provides virtual machines in AWS.
-- An IAM instance role gives an application or instance temporary permissions to access other AWS services without storing access keys on the server.
+EC2 provides virtual machines in AWS. An IAM instance role gives an application or instance temporary permissions to access other AWS services without storing access keys on the server.
 
 **What I worked on**
-- I launched an Ubuntu EC2 instance, connected to it, attached an IAM role, and used the instance to download an object from S3.
-- I also created an AMI from the instance.
+I launched an Ubuntu EC2 instance, connected to it, attached an IAM role, and used the instance to download an object from S3. I also created an AMI from the instance.
 
 **How I did it**
 - Launched an EC2 instance and allowed SSH access through its security group.
@@ -16,7 +14,7 @@
 - Created an AMI to reuse the instance configuration.
 
 **Problem it solves**
-- This shows how to provide an EC2 workload with controlled AWS access without keeping long-lived access keys on the instance.
+This shows how to provide an EC2 workload with controlled AWS access without keeping long-lived access keys on the instance.
 
 **Flowchart**
 ```mermaid

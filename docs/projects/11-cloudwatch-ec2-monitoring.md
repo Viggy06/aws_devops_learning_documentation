@@ -1,11 +1,10 @@
 # EC2 Monitoring with CloudWatch
 
 **Concept**
-- CloudWatch collects metrics and logs, and alarms can trigger actions or notifications when a metric crosses a configured threshold.
-- The CloudWatch Agent collects additional metrics and instance logs.
+CloudWatch collects metrics and logs, and alarms can trigger actions or notifications when a metric crosses a configured threshold. The CloudWatch Agent collects additional metrics and instance logs.
 
 **What I worked on**
-- I installed the CloudWatch Agent on an EC2 instance and created a CloudWatch alarm for high EC2 CPU utilization with an SNS notification path.
+I installed the CloudWatch Agent on an EC2 instance and created a CloudWatch alarm for high EC2 CPU utilization with an SNS notification path.
 
 **How I did it**
 - Created and attached an IAM role with permissions for the agent.
@@ -15,11 +14,11 @@
 - Generated CPU load and checked that the alarm entered the alarm state.
 
 **Problem it solves**
-- It provides visibility into instance activity and can notify an operator when monitored resource usage reaches a configured threshold.
+It provides visibility into instance activity and can notify an operator when monitored resource usage reaches a configured threshold.
 
 **Flowchart**
 ```mermaid
-flowchart LR
+flowchart TD
     A["Launch EC2 Instance"] --> B["Create IAM Role"]
     B --> C["Attach IAM Role to EC2"]
     C --> D["Install CloudWatch Agent"]
