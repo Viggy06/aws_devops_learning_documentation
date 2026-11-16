@@ -14,3 +14,17 @@ I created a private hosted zone, associated it with a VPC, and configured a reco
 
 **Problem it solves**
 Applications and administrators can use internal DNS names instead of relying on instance IP addresses or exposing internal resources through public DNS.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Create Two EC2 Instances in Same VPC"] --> B["Create Private Hosted Zone"]
+    B --> C["Associate Hosted Zone with VPC"]
+    C --> D["Create A Record"]
+    D --> E["Map db.mytestapp.com to Private EC2 IP"]
+
+    F["Client EC2 Instance"] --> G["DNS Lookup"]
+    G --> H["Route 53 Private Hosted Zone"]
+    H --> I["Return Private IP Address"]
+    I --> J["Connect to Target EC2 Using DNS Name"]
+```

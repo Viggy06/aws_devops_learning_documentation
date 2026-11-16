@@ -14,3 +14,17 @@ I worked through the setup required to connect to EC2 using Session Manager, inc
 
 **Problem it solves**
 It provides a managed administration path for private instances and can reduce the need to expose SSH or maintain inbound port 22 access.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Prepare EC2 Instance"] --> B["Verify SSM Agent"]
+    B --> C["Create IAM Instance Role"]
+    C --> D["Attach Role to EC2"]
+    D --> E["EC2 Registers with Systems Manager"]
+
+    F["User with Session Manager IAM Permission"] --> G["Open Session Manager"]
+    G --> H["Select Managed EC2 Instance"]
+    H --> I["Start Session"]
+    I --> J["Secure Terminal Access"]
+```

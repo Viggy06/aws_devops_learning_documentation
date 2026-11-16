@@ -14,3 +14,28 @@ I set up Nagios Core on a main EC2 instance and configured NRPE with monitoring 
 
 **Problem it solves**
 It provides one place to review the health checks configured for multiple EC2 instances and helps alert an operator when a host or service check reports a problem.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Main EC2 Instance"] --> B["Install Nagios Core"]
+
+    C["Remote EC2 Instance 1"] --> D["Install NRPE and Plugins"]
+    E["Remote EC2 Instance 2"] --> F["Install NRPE and Plugins"]
+
+    B --> G["Configure Host and Service Checks"]
+    G --> H["Nagios Schedules Checks"]
+
+    H --> D
+    H --> F
+
+    D --> I["Return Check Results"]
+    F --> I
+
+    I --> J["Nagios Evaluates Host and Service Status"]
+    J --> K["Nagios Dashboard"]
+
+    J --> L{"Alert Condition Met?"}
+    L -->|"Yes"| M["Send Email Notification"]
+    L -->|"No"| H
+```

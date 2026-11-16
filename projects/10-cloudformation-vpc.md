@@ -14,3 +14,14 @@ I used a YAML CloudFormation template to create a VPC stack.
 
 **Problem it solves**
 A template provides a repeatable way to create infrastructure and reduces manual configuration differences between environments.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Write CloudFormation YAML Template"] --> B["Upload Template to S3"]
+    B --> C["Open CloudFormation"]
+    C --> D["Create Stack Using S3 Template"]
+    D --> E["CloudFormation Processes Template"]
+    E --> F["Create VPC Resources Defined in Template"]
+    F --> G["Stack Creation Complete"]
+```

@@ -14,3 +14,19 @@ I packaged a Flask application in a Docker image, pushed it to ECR, and ran it a
 
 **Problem it solves**
 The application can be deployed as a repeatable container workload without managing the underlying EC2 hosts. ECS keeps the service at its configured desired task count.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Flask Application"] --> B["Create Dockerfile"]
+    B --> C["Build Docker Image"]
+    C --> D["Push Image to Amazon ECR"]
+
+    D --> E["Create ECS Task Definition"]
+    E --> F["Configure Container Port 8080"]
+    F --> G["Create ECS Cluster"]
+    G --> H["Create ECS Fargate Service"]
+    H --> I["Run Fargate Task"]
+    I --> J["Flask Application Running"]
+    J --> K["Test Health Check API"]
+```

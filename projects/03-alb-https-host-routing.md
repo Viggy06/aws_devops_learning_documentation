@@ -15,3 +15,26 @@ I configured an ALB with EC2 target groups, added HTTPS using an ACM certificate
 
 **Problem it solves**
 One ALB can provide HTTPS access and route multiple domains or applications to the correct backend without exposing each EC2 instance directly.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    ACM["Request ACM Certificate"] --> DNS["Create DNS Validation Record"]
+    DNS --> CERT["Certificate Validated"]
+    CERT --> LISTENER["Configure ALB HTTPS Listener :443"]
+
+    USER["Client / Browser"] --> R53["Route 53 Domain Record"]
+    R53 --> ALB["Application Load Balancer"]
+    LISTENER --> ALB
+
+    ALB --> RULE{"Host-based Routing"}
+
+    RULE -->|"Domain A"| TG1["Target Group A"]
+    RULE -->|"Domain B"| TG2["Target Group B"]
+
+    TG1 --> EC2A["EC2 Instance A"]
+    TG2 --> EC2B["EC2 Instance B"]
+
+    EC2A --> HC["Target Group Health Checks"]
+    EC2B --> HC
+```

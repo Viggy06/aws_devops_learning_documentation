@@ -15,3 +15,14 @@ I launched an Ubuntu EC2 instance, connected to it, attached an IAM role, and us
 
 **Problem it solves**
 This shows how to provide an EC2 workload with controlled AWS access without keeping long-lived access keys on the instance.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Create IAM Role"] --> B["Attach S3 Read Permissions"]
+    B --> C["Create EC2 Instance Profile"]
+    C --> D["Attach Role to EC2"]
+    D --> E["EC2 obtains temporary credentials"]
+    E --> F["Request S3 Object"]
+    F --> G["Download Object to EC2"]
+```

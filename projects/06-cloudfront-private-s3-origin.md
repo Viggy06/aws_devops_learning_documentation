@@ -14,3 +14,20 @@ I created a private S3 bucket and connected it to a CloudFront distribution as t
 
 **Problem it solves**
 This provides cached delivery for static content while reducing direct exposure of the S3 bucket.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["User Requests Website File"] --> B["CloudFront Distribution"]
+    B --> C{"Object in Cache?"}
+
+    C -->|"Yes"| D["Serve Cached Content"]
+    C -->|"No"| E["Request from S3 Origin"]
+
+    E --> F["CloudFront Origin Access Configuration"]
+    F --> G["Private S3 Bucket"]
+    G --> H["Return Object to CloudFront"]
+    H --> I["Cache and Deliver Content"]
+
+    J["Direct S3 Request"] --> K["Access Denied"]
+```

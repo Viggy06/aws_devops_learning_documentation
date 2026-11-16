@@ -14,3 +14,18 @@ I configured Fail2ban for host-level login protection and used msmtp as the SMTP
 
 **Problem it solves**
 It automates a response to repeated login attempts and reduces the need to watch authentication logs manually. It is host-level protection, not a replacement for application API rate limiting or strong access controls.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["User Attempts Authentication"] --> B["Authentication Logs"]
+    B --> C["Fail2ban Monitors Logs"]
+    C --> D{"Failed Attempts Reach Configured Limit?"}
+
+    D -->|"No"| C
+    D -->|"Yes"| E["Apply Configured Firewall Ban"]
+    E --> F["Block Source IP Temporarily"]
+    E --> G["Trigger Email Notification"]
+    G --> H["msmtp Sends Email"]
+    H --> I["Administrator Receives Alert"]
+```

@@ -14,3 +14,17 @@ I created an RDS MySQL database with public access disabled and connected to it 
 
 **Problem it solves**
 The application server can communicate with its database over the VPC network while the database remains unavailable for direct public connections.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Create RDS MySQL Database"] --> B["Keep Database Private"]
+    C["Launch EC2 Instance"] --> D["Install MySQL Client"]
+
+    B --> E["Configure RDS Security Group"]
+    D --> E
+
+    E --> F["Allow MySQL Port 3306 from EC2 Security Group"]
+    F --> G["Connect Using RDS Endpoint"]
+    G --> H["Test MySQL Connection"]
+```

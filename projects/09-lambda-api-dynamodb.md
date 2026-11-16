@@ -15,3 +15,21 @@ I created a DynamoDB table and sample items, wrote a Lambda function to read the
 
 **Problem it solves**
 This pattern exposes data through an API without running a dedicated application server or managing database infrastructure.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Create DynamoDB Table"] --> B["Add Sample Items"]
+    C["Create Lambda Function"] --> D["Create Lambda IAM Role"]
+    D --> E["Allow DynamoDB Read Access"]
+    E --> F["Attach Role to Lambda"]
+
+    B --> G["Lambda Reads DynamoDB Data"]
+    F --> G
+
+    H["Create API Gateway"] --> I["Integrate with Lambda"]
+    I --> J["Client Sends API Request"]
+    J --> G
+    G --> K["Return Response Through API Gateway"]
+    K --> L["View Response in Browser"]
+```

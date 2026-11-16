@@ -14,3 +14,31 @@ I created public and private subnets, connected to a private EC2 instance throug
 
 **Problem it solves**
 Private instances can stay off the public internet while still receiving controlled administration access, downloading required updates, and reaching S3 privately.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    Internet["Internet"] --> IGW["Internet Gateway"]
+
+    subgraph VPC["AWS VPC"]
+        subgraph Public["Public Subnet"]
+            Bastion["Public EC2 / Bastion"]
+            NAT["NAT Gateway"]
+        end
+
+        subgraph Private["Private Subnet"]
+            EC2["Private EC2"]
+        end
+
+        Endpoint["S3 Gateway Endpoint"]
+    end
+
+    IGW --> Bastion
+    Bastion -->|"SSH using private IP"| EC2
+
+    EC2 -->|"Outbound traffic"| NAT
+    NAT --> IGW
+
+    EC2 -->|"Private S3 traffic"| Endpoint
+    Endpoint --> S3[("Amazon S3")]
+```

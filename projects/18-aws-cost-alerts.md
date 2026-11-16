@@ -14,3 +14,22 @@ I created a billing alarm for a $5 threshold with an SNS email notification and 
 
 **Problem it solves**
 Cost alerts provide an early warning when spending reaches a chosen limit and help avoid unexpected charges during hands-on testing.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Enable Billing Alerts in Billing Preferences"] --> B["CloudWatch Billing Metrics"]
+    B --> C["Create Billing Alarm"]
+    C --> D["Set Threshold: $5"]
+    D --> E{"Estimated Charges Above Threshold?"}
+
+    E -->|"Yes"| F["Alarm Enters ALARM State"]
+    F --> G["SNS Topic"]
+    G --> H["Email Subscriber"]
+
+    E -->|"No"| B
+
+    I["Create AWS Budget"] --> J["Configure Budget Threshold"]
+    J --> K["Configure Budget Notifications"]
+    K --> L["Email Notification"]
+```

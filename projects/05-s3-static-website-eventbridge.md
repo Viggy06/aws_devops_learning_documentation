@@ -15,3 +15,27 @@ I hosted a basic website from an S3 bucket and configured an EventBridge rule to
 
 **Problem it solves**
 The website exercise demonstrates hosting static content without managing a web server. The event workflow demonstrates how an upload or object change can start automated processing without a continuously running server.
+
+**Flowchart**
+### 1. S3 static website hosting
+```mermaid
+flowchart TD
+    A["Prepare index.html and Assets"] --> B["Create S3 Bucket"]
+    B --> C["Upload Website Files"]
+    C --> D["Enable Static Website Hosting"]
+    D --> E["Set index.html as Root Document"]
+    E --> F["Configure Bucket Policy"]
+    F --> G["Access Website Endpoint"]
+    G --> H["Website Opens in Browser"]
+```
+
+### 2. S3 event triggering Lambda
+```mermaid
+flowchart TD
+    A["Upload or Update S3 Object"] --> B["S3 Bucket"]
+    B --> C["Enable EventBridge Integration"]
+    C --> D["Create EventBridge Rule"]
+    D --> E["Configure Object Event Filter"]
+    E --> F["Select Lambda as Target"]
+    F --> G["Lambda Function Triggered"]
+```

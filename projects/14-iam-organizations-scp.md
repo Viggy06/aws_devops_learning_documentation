@@ -13,3 +13,29 @@ I created an Organization and a member account, applied an SCP restricting EC2 i
 
 **Problem it solves**
 These controls help manage access across accounts and apply guardrails centrally. An SCP limits what identities can do; it does not grant permissions by itself.
+
+**Flowchart**
+### 1. AWS Organizations and SCP
+```mermaid
+flowchart TD
+    A["Create AWS Organization"] --> B["Create Member Account"]
+    B --> C["Create SCP Policy"]
+    C --> D["Restrict EC2 Instance Types"]
+    D --> E["Allow Only t2.micro"]
+    E --> F["Attach SCP to Test Account"]
+    F --> G["Test EC2 Launch"]
+    G --> H{"Requested Instance Type?"}
+    H -->|"t2.micro"| I["Allowed by SCP"]
+    H -->|"Other Type"| J["Explicitly Denied by SCP"]
+```
+
+### 2. IAM Identity Center
+```mermaid
+flowchart TD
+    A["Enable IAM Identity Center"] --> B["Create User"]
+    B --> C["Create Permission Set"]
+    C --> D["Assign User to AWS Account"]
+    D --> E["Permission Set Creates IAM Role in Account"]
+    E --> F["User Signs In Through Access Portal"]
+    F --> G["Access Account with Assigned Permissions"]
+```

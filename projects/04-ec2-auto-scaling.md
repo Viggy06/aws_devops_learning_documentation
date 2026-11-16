@@ -15,3 +15,19 @@ I created an Auto Scaling Group across two Availability Zones using a launch tem
 
 **Problem it solves**
 The group can add capacity when demand increases and reduce unused capacity when demand falls, instead of relying on manual instance changes.
+
+**Flowchart**
+```mermaid
+flowchart TD
+    A["Create Launch Template"] --> B["Create Auto Scaling Group"]
+    B --> C["Configure Min: 1, Desired: 2, Max: 3"]
+    C --> D["Deploy Across Two Availability Zones"]
+    D --> E["Two EC2 Instances Running"]
+    E --> F["Generate CPU Load / Stress Test"]
+    F --> G["CloudWatch Monitors CPU Utilization"]
+    G --> H{"CPU Threshold Reached?"}
+    H -->|"Yes - 50% threshold"| I["Scaling Action"]
+    I --> J["Launch Additional EC2 Instance"]
+    J --> K["Three Instances Running"]
+    H -->|"No"| G
+```
