@@ -1,0 +1,60 @@
+site_name: DevOps Learning Documentation
+site_description: AWS and Infrastructure Implementation Documentation
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+
+plugins:
+  - search
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: index.md
+
+  - Networking and Access:
+      - EC2 and IAM: projects/01-ec2-iam-s3-access.md
+      - VPC Networking: projects/02-vpc-public-private-networking.md
+      - ALB and HTTPS: projects/03-alb-https-host-routing.md
+      - Private DNS: projects/17-route53-private-dns.md
+
+  - Compute and Containers:
+      - EC2 Auto Scaling: projects/04-ec2-auto-scaling.md
+      - ECS Fargate: projects/07-ecs-fargate-flask.md
+
+  - Storage and Serverless:
+      - S3 and EventBridge: projects/05-s3-static-website-eventbridge.md
+      - CloudFront: projects/06-cloudfront-private-s3-origin.md
+      - RDS MySQL: projects/08-ec2-private-rds-mysql.md
+      - Lambda and DynamoDB: projects/09-lambda-api-dynamodb.md
+
+  - Infrastructure and Monitoring:
+      - CloudFormation: projects/10-cloudformation-vpc.md
+      - CloudWatch: projects/11-cloudwatch-ec2-monitoring.md
+      - Systems Manager: projects/12-ssm-session-manager.md
+      - VPC Flow Logs: projects/13-vpc-flow-logs.md
+
+  - Security and Operations:
+      - SSH Key Recovery: projects/13-ec2-ssh-key-recovery.md
+      - IAM and Organizations: projects/14-iam-organizations-scp.md
+      - Fail2ban: projects/15-fail2ban-ec2-protection.md
+      - Nagios Monitoring: projects/16-nagios-core-nrpe-monitoring.md
+      - AWS Cost Alerts: projects/18-aws-cost-alerts.md
