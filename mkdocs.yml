@@ -1,8 +1,33 @@
-site_name: DevOps Learning Documentation
-site_description: AWS and Infrastructure Implementation Documentation
+site_name: AWS & Infrastructure – Practical Work
+site_description: Practical AWS, Linux and DevOps learning documentation
 
-docs_dir: docs
-site_dir: site
+# Add your GitHub Pages URL here after deployment, if it is not already configured.
+# site_url: https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/
+
+nav:
+  - Home: index.md
+  - Compute and Access:
+      - EC2 and IAM S3 Access: projects/01-ec2-iam-s3-access.md
+      - EC2 Auto Scaling: projects/04-ec2-auto-scaling.md
+      - ECS Fargate Flask: projects/07-ecs-fargate-flask.md
+      - Systems Manager Session Manager: projects/12-ssm-session-manager.md
+      - EC2 SSH Key Recovery: projects/13-ec2-ssh-key-recovery.md
+  - Networking and Delivery:
+      - VPC Public and Private Networking: projects/02-vpc-public-private-networking.md
+      - ALB HTTPS and Host Routing: projects/03-alb-https-host-routing.md
+      - CloudFront with Private S3 Origin: projects/06-cloudfront-private-s3-origin.md
+      - Route 53 Private DNS: projects/17-route53-private-dns.md
+  - Storage, Database and Serverless:
+      - S3 Website and EventBridge: projects/05-s3-static-website-eventbridge.md
+      - Private RDS MySQL: projects/08-ec2-private-rds-mysql.md
+      - Lambda API and DynamoDB: projects/09-lambda-api-dynamodb.md
+  - Infrastructure, Monitoring and Security:
+      - CloudFormation VPC: projects/10-cloudformation-vpc.md
+      - CloudWatch EC2 Monitoring: projects/11-cloudwatch-ec2-monitoring.md
+      - IAM, Organizations and SCP: projects/14-iam-organizations-scp.md
+      - Fail2ban EC2 Protection: projects/15-fail2ban-ec2-protection.md
+      - Nagios Core and NRPE: projects/16-nagios-core-nrpe-monitoring.md
+      - AWS Billing Alerts and Budgets: projects/18-aws-cost-alerts.md
 
 theme:
   name: material
@@ -10,13 +35,32 @@ theme:
     - navigation.sections
     - navigation.expand
     - navigation.top
+    - navigation.footer
     - search.suggest
     - search.highlight
+    - search.share
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue grey
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
 
 plugins:
   - search
 
 markdown_extensions:
+  - attr_list
+  - md_in_html
+  - tables
   - toc:
       permalink: true
   - admonition
@@ -27,33 +71,7 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
 
-nav:
-  - Home: index.md
+extra_css:
+  - assets/extra.css
 
-  - Networking and Access:
-      - EC2 and IAM: projects/01-ec2-iam-s3-access.md
-      - VPC Networking: projects/02-vpc-public-private-networking.md
-      - ALB and HTTPS: projects/03-alb-https-host-routing.md
-      - Private DNS: projects/17-route53-private-dns.md
-
-  - Compute and Containers:
-      - EC2 Auto Scaling: projects/04-ec2-auto-scaling.md
-      - ECS Fargate: projects/07-ecs-fargate-flask.md
-
-  - Storage and Serverless:
-      - S3 and EventBridge: projects/05-s3-static-website-eventbridge.md
-      - CloudFront: projects/06-cloudfront-private-s3-origin.md
-      - RDS MySQL: projects/08-ec2-private-rds-mysql.md
-      - Lambda and DynamoDB: projects/09-lambda-api-dynamodb.md
-
-  - Infrastructure and Monitoring:
-      - CloudFormation: projects/10-cloudformation-vpc.md
-      - CloudWatch: projects/11-cloudwatch-ec2-monitoring.md
-      - Systems Manager: projects/12-ssm-session-manager.md
-
-  - Security and Operations:
-      - SSH Key Recovery: projects/13-ec2-ssh-key-recovery.md
-      - IAM and Organizations: projects/14-iam-organizations-scp.md
-      - Fail2ban: projects/15-fail2ban-ec2-protection.md
-      - Nagios Monitoring: projects/16-nagios-core-nrpe-monitoring.md
-      - AWS Cost Alerts: projects/18-aws-cost-alerts.md
+copyright: AWS & Infrastructure Practical Work · Learning documentation
